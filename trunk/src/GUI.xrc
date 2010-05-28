@@ -1,0 +1,174 @@
+<?xml version="1.0" ?>
+<resource>
+  <object class="wxFrame" name="CRelogioFrame">
+    <title>Relogio de ponto</title>
+    <centered>1</centered>
+    <style>wxDEFAULT_FRAME_STYLE</style>
+    <object class="wxBoxSizer">
+      <object class="sizeritem">
+        <object class="wxPanel" name="ControlPanel">
+          <object class="wxStaticBoxSizer">
+            <object class="sizeritem">
+              <object class="wxBitmapButton" name="AddMarkBtn">
+                <bitmap>..\res\clock.png</bitmap>
+                <tooltip>Add a temporal mark</tooltip>
+                <XRCED>
+                  <events>EVT_BUTTON</events>
+                  <assign_var>1</assign_var>
+                </XRCED>
+              </object>
+            </object>
+            <object class="sizeritem">
+              <object class="wxBitmapButton" name="ExitBtn">
+                <bitmap>..\res\saida.png</bitmap>
+                <tooltip>Exit</tooltip>
+                <XRCED>
+                  <events>EVT_BUTTON</events>
+                  <assign_var>1</assign_var>
+                </XRCED>
+              </object>
+            </object>
+            <object class="spacer">
+              <size>200,-1</size>
+            </object>
+            <object class="sizeritem">
+              <object class="wxBitmapButton" name="ClearAllMarks">
+                <bitmap>..\res\stop.png</bitmap>
+                <XRCED>
+                  <events>EVT_BUTTON</events>
+                  <assign_var>1</assign_var>
+                </XRCED>
+              </object>
+              <flag>wxRIGHT|wxALIGN_RIGHT</flag>
+            </object>
+            <label>Control</label>
+            <orient>wxHORIZONTAL</orient>
+          </object>
+        </object>
+        <flag>wxEXPAND|wxALIGN_TOP</flag>
+      </object>
+      <orient>wxVERTICAL</orient>
+    </object>
+  </object>
+  <object class="wxDialog" name="CMarkDlg">
+    <object class="wxBoxSizer">
+      <orient>wxVERTICAL</orient>
+      <object class="sizeritem">
+        <object class="wxBoxSizer">
+          <object class="sizeritem">
+            <object class="wxRadioBox" name="CRadio_Type">
+              <label>Tipo</label>
+              <dimension>1</dimension>
+              <content>
+                <item>ENTRADA</item>
+                <item>SAIDA</item>
+              </content>
+              <selection>0</selection>
+              <dimension>1</dimension>
+              <XRCED>
+                <events>EVT_RADIOBOX</events>
+                <assign_var>1</assign_var>
+              </XRCED>
+            </object>
+            <flag>wxEXPAND|wxALIGN_CENTRE_VERTICAL|wxALIGN_CENTRE_HORIZONTAL</flag>
+          </object>
+          <object class="sizeritem">
+            <object class="wxRadioBox" name="CRadio_subType">
+              <label>SubType</label>
+              <dimension>1</dimension>
+              <content>
+                <item>NORMAL</item>
+                <item>ALMOCO</item>
+                <item>EXTRAORDINARIA</item>
+              </content>
+              <selection>0</selection>
+              <dimension>1</dimension>
+              <XRCED>
+                <events>EVT_RADIOBOX</events>
+                <assign_var>1</assign_var>
+              </XRCED>
+            </object>
+            <flag>wxEXPAND|wxALIGN_CENTRE_VERTICAL|wxALIGN_CENTRE_HORIZONTAL</flag>
+          </object>
+          <orient>wxHORIZONTAL</orient>
+        </object>
+        <flag>wxEXPAND|wxALIGN_CENTRE_VERTICAL|wxALIGN_CENTRE_HORIZONTAL</flag>
+      </object>
+      <object class="sizeritem">
+        <object class="wxBoxSizer">
+          <object class="sizeritem">
+            <object class="wxStaticBoxSizer">
+              <object class="sizeritem">
+                <object class="wxTextCtrl" name="cTimeStamp">
+                  <XRCED>
+                    <assign_var>1</assign_var>
+                  </XRCED>
+                </object>
+                <flag>wxEXPAND|wxALIGN_CENTRE_VERTICAL|wxALIGN_CENTRE_HORIZONTAL</flag>
+              </object>
+              <label>Date and time</label>
+              <orient>wxVERTICAL</orient>
+            </object>
+            <flag>wxEXPAND|wxALIGN_CENTRE_VERTICAL|wxALIGN_CENTRE_HORIZONTAL</flag>
+          </object>
+          <orient>wxVERTICAL</orient>
+        </object>
+        <flag>wxEXPAND|wxALIGN_CENTRE_VERTICAL|wxALIGN_CENTRE_HORIZONTAL</flag>
+      </object>
+      <object class="sizeritem">
+        <object class="wxBoxSizer" name="CCommentTextCtrl">
+          <orient>wxVERTICAL</orient>
+          <object class="sizeritem">
+            <object class="wxStaticBoxSizer">
+              <object class="sizeritem">
+                <object class="wxTextCtrl" name="CCommentTextCtrl">
+                  <XRCED>
+                    <assign_var>1</assign_var>
+                  </XRCED>
+                </object>
+                <flag>wxEXPAND|wxALIGN_CENTRE_VERTICAL|wxALIGN_CENTRE_HORIZONTAL</flag>
+              </object>
+              <label>Comment</label>
+              <orient>wxVERTICAL</orient>
+            </object>
+            <flag>wxEXPAND|wxALIGN_CENTRE_VERTICAL|wxALIGN_CENTRE_HORIZONTAL</flag>
+          </object>
+        </object>
+        <flag>wxEXPAND|wxALIGN_CENTRE_VERTICAL|wxALIGN_CENTRE_HORIZONTAL</flag>
+      </object>
+      <object class="sizeritem">
+        <object class="wxBoxSizer">
+          <object class="sizeritem">
+            <object class="wxButton" name="CMarkBtn">
+              <label>Mark</label>
+              <XRCED>
+                <events>EVT_BUTTON</events>
+              </XRCED>
+            </object>
+            <option>1</option>
+            <flag>wxEXPAND|wxGROW|wxALIGN_CENTRE_VERTICAL|wxALIGN_CENTRE_HORIZONTAL</flag>
+          </object>
+          <object class="sizeritem">
+            <object class="wxButton" name="CCancelBtn">
+              <label>Cancel</label>
+              <XRCED>
+                <events>EVT_BUTTON</events>
+              </XRCED>
+            </object>
+            <option>1</option>
+            <flag>wxEXPAND|wxALIGN_CENTRE_VERTICAL|wxALIGN_CENTRE_HORIZONTAL</flag>
+          </object>
+          <orient>wxHORIZONTAL</orient>
+        </object>
+        <flag>wxEXPAND|wxALIGN_CENTRE_VERTICAL|wxALIGN_CENTRE_HORIZONTAL</flag>
+      </object>
+    </object>
+    <title>Mark</title>
+    <centered>1</centered>
+    <icon stock_id="wxART_TICK_MARK"/>
+    <style>wxDEFAULT_DIALOG_STYLE</style>
+    <XRCED>
+      <events>EVT_CLOSE</events>
+    </XRCED>
+  </object>
+</resource>
