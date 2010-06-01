@@ -33,7 +33,9 @@
             </object>
             <object class="sizeritem">
               <object class="wxBitmapButton" name="ClearAllMarks">
-                <bitmap>..\res\stop.png</bitmap>
+                <size>40,40</size>
+                <bitmap>..\res\R2D2.png</bitmap>
+                <tooltip>DEBUG - ERASE DAYLONG</tooltip>
                 <XRCED>
                   <events>EVT_BUTTON</events>
                   <assign_var>1</assign_var>
