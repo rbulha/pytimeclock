@@ -151,16 +151,32 @@ class CMilestonePanel(wx.Panel):
         if (entrada_almoco - saida_almoco) > 0:
             offset = self.get_xy_offset()
             tempo_lunch = entrada_almoco - saida_almoco 
-            self.MilestoneCollection.append(\
-                                            CMilestone(self, \
-                                                       wx.ID_ANY, \
-                                                       offset, \
-                                                       TNI.MISC, \
-                                                       TNI.LUNCH, \
-                                                       "Lunch time", \
-                                                       "%0.2f min"%(tempo_lunch/60)))
+            if journey_time > 0 and journey_time > tempo_lunch:
+                journey_time = journey_time - tempo_lunch
+            if tempo_lunch < 3600:    
+                self.MilestoneCollection.append(\
+                                                CMilestone(self, \
+                                                           wx.ID_ANY, \
+                                                           offset, \
+                                                           TNI.MISC, \
+                                                           TNI.LUNCH, \
+                                                           "Lunch time", \
+                                                           "%0.2f min"%(tempo_lunch/60)))
+            else:
+                self.MilestoneCollection.append(\
+                                                CMilestone(self, \
+                                                           wx.ID_ANY, \
+                                                           offset, \
+                                                           TNI.MISC, \
+                                                           TNI.LUNCH, \
+                                                           "Lunch time", \
+                                                           "%02d:%02d h"%(tempo_lunch/3600,(journey_time%3600.0)*60)))
+                
         if out_of_office > 0:
             offset = self.get_xy_offset()
+            if journey_time > 0 and journey_time > out_of_office:
+                journey_time = journey_time - out_of_office
+            
             self.MilestoneCollection.append(\
                                             CMilestone(self, \
                                                        wx.ID_ANY, \
@@ -175,7 +191,7 @@ class CMilestonePanel(wx.Panel):
             else:
                 o_hora = journey_time/3600.0
                 o_min  = (journey_time%3600.0)*60
-                output_text = "%d:%d h"%(o_hora,o_min)
+                output_text = "%02d:%02d h"%(o_hora,o_min)
                 
             offset = self.get_xy_offset()
             self.MilestoneCollection.append(\
