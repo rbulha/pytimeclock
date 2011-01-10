@@ -2,6 +2,7 @@ import wx
 import time
 
 from BaseDefs import TypeNIcons as TNI
+from RPConfig import CRPConfig
 
 '''try:
     from agw import balloontip as BT
@@ -115,6 +116,8 @@ class CMilestonePanel(wx.Panel):
         start_time = 0.0
         end_time   = 0.0
         journey_time = 0.0
+        remain_time = 0.0
+        estimated_time = 0.0
         for entry in today:
             if entry[3] == 0x11:
                 offset = self.get_xy_offset() 
@@ -190,7 +193,7 @@ class CMilestonePanel(wx.Panel):
                 output_text = "%0.2f min"%(float(journey_time)/60.0)
             else:
                 o_hora = journey_time/3600.0
-                o_min  = (journey_time%3600.0)*60
+                o_min  = (journey_time%3600.0)/60
                 output_text = "%02d:%02d h"%(o_hora,o_min)
                 
             offset = self.get_xy_offset()
@@ -201,7 +204,41 @@ class CMilestonePanel(wx.Panel):
                                                        TNI.MISC, \
                                                        TNI.CLOCK, \
                                                        "Total Journey", \
-                                                       output_text ))                        
+                                                       output_text )) 
+            if journey_time < CRPConfig.GetJorneyInSeconds():
+                remain_time = CRPConfig.GetJorneyInSeconds() -  journey_time
+                offset = self.get_xy_offset()
+                o_hora = remain_time/3600.0
+                o_min  = (remain_time%3600.0)/60
+                output_text = "%02d:%02d h"%(o_hora,o_min)                
+                self.MilestoneCollection.append(\
+                                                CMilestone(self, \
+                                                           wx.ID_ANY, \
+                                                           offset, \
+                                                           TNI.MISC, \
+                                                           TNI.CLOCK, \
+                                                           "Remain", \
+                                                           output_text ))  
+                #estimated out time
+                if tempo_lunch > 0:
+                    estimated_time = start_time + journey_time + remain_time + tempo_lunch
+                else:
+                    estimated_time = start_time + journey_time + remain_time + 5400
+                        
+                offset = self.get_xy_offset()
+                o_hora = estimated_time/3600.0
+                o_min  = (estimated_time%3600.0)/60
+                output_text = "%02d:%02d h"%(o_hora,o_min)                
+                self.MilestoneCollection.append(\
+                                                CMilestone(self, \
+                                                           wx.ID_ANY, \
+                                                           offset, \
+                                                           TNI.SAIDA, \
+                                                           TNI.NORMAL, \
+                                                           "Estimated", \
+                                                           output_text ))                              
+            else:                                            
+                remain_time = 0  
 
     def DeleteAll(self):
         for bm in self.MilestoneCollection:
