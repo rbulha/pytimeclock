@@ -91,7 +91,7 @@ class CDialogMark(xrcCMarkDlg):
 class CCRelogioFrame(xrcCRelogioFrame):
     def __init__(self, parent):
         xrcCRelogioFrame.__init__(self, parent)
-        #load aplication icon
+        #load application icon
         iconFile = "../res/date.ico"
         icon = wx.Icon(iconFile, wx.BITMAP_TYPE_ICO)
         self.SetIcon(icon)
