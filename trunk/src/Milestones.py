@@ -173,7 +173,7 @@ class CMilestonePanel(wx.Panel):
                                                            TNI.MISC, \
                                                            TNI.LUNCH, \
                                                            "Lunch time", \
-                                                           "%02d:%02d h"%(tempo_lunch/3600,(journey_time%3600.0)*60)))
+                                                           "%02d:%02d h"%(tempo_lunch/3600,(journey_time%3600.0)/60)))
                 
         if out_of_office > 0:
             offset = self.get_xy_offset()
@@ -203,7 +203,7 @@ class CMilestonePanel(wx.Panel):
                                                        offset, \
                                                        TNI.MISC, \
                                                        TNI.CLOCK, \
-                                                       "Total Journey", \
+                                                       "Journey", \
                                                        output_text )) 
             if journey_time < CRPConfig.GetJorneyInSeconds():
                 remain_time = CRPConfig.GetJorneyInSeconds() -  journey_time

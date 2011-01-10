@@ -85,6 +85,21 @@ class CPontoDB:
                                  self.DB[mark]['comentario'])
                     today_list.append(mark_temp)
         return today_list            
+    def GetDate(self,day):
+        #today = time.localtime()
+        today = time.strptime(day,"%d/%m/%Y")
+        today_list = []
+        for mark in self.DB:
+            if  self.DB[mark]['time'].tm_year == today.tm_year and \
+                self.DB[mark]['time'].tm_mon  == today.tm_mon  and \
+                self.DB[mark]['time'].tm_mday == today.tm_mday :
+                    mark_temp = (self.DB[mark]['time'].tm_hour, \
+                                 self.DB[mark]['time'].tm_min,  \
+                                 self.DB[mark]['time'].tm_sec,  \
+                                 self.DB[mark]['tipo'],         \
+                                 self.DB[mark]['comentario'])
+                    today_list.append(mark_temp)
+        return today_list            
                     
 if __name__ == '__main__':
     cPontoDB = CPontoDB()
