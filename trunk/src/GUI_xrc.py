@@ -38,10 +38,12 @@ class xrcCRelogioFrame(wx.Frame):
         # Define variables for the controls, bind event handlers
         self.AddMarkBtn = xrc.XRCCTRL(self, "AddMarkBtn")
         self.ExitBtn = xrc.XRCCTRL(self, "ExitBtn")
+        self.CReportButton = xrc.XRCCTRL(self, "CReportButton")
         self.ClearAllMarks = xrc.XRCCTRL(self, "ClearAllMarks")
 
         self.Bind(wx.EVT_BUTTON, self.OnButton_AddMarkBtn, self.AddMarkBtn)
         self.Bind(wx.EVT_BUTTON, self.OnButton_ExitBtn, self.ExitBtn)
+        self.Bind(wx.EVT_BUTTON, self.OnButton_CReportButton, self.CReportButton)
         self.Bind(wx.EVT_BUTTON, self.OnButton_ClearAllMarks, self.ClearAllMarks)
 
 #!XRCED:begin-block:xrcCRelogioFrame.OnButton_AddMarkBtn
@@ -55,6 +57,12 @@ class xrcCRelogioFrame(wx.Frame):
         # Replace with event handler code
         print "OnButton_ExitBtn()"
 #!XRCED:end-block:xrcCRelogioFrame.OnButton_ExitBtn        
+
+#!XRCED:begin-block:xrcCRelogioFrame.OnButton_CReportButton
+    def OnButton_CReportButton(self, evt):
+        # Replace with event handler code
+        print "OnButton_CReportButton()"
+#!XRCED:end-block:xrcCRelogioFrame.OnButton_CReportButton        
 
 #!XRCED:begin-block:xrcCRelogioFrame.OnButton_ClearAllMarks
     def OnButton_ClearAllMarks(self, evt):
@@ -86,10 +94,13 @@ class xrcCMarkDlg(wx.Dialog):
         self.CRadio_Type = xrc.XRCCTRL(self, "CRadio_Type")
         self.CRadio_subType = xrc.XRCCTRL(self, "CRadio_subType")
         self.cTimeStamp = xrc.XRCCTRL(self, "cTimeStamp")
+        self.wxTimeSlider = xrc.XRCCTRL(self, "wxTimeSlider")
         self.CCommentTextCtrl = xrc.XRCCTRL(self, "CCommentTextCtrl")
 
         self.Bind(wx.EVT_RADIOBOX, self.OnRadiobox_CRadio_Type, self.CRadio_Type)
         self.Bind(wx.EVT_RADIOBOX, self.OnRadiobox_CRadio_subType, self.CRadio_subType)
+        self.Bind(wx.EVT_SCROLL, self.OnScroll_wxTimeSlider, self.wxTimeSlider)
+        self.Bind(wx.EVT_SCROLL, self.OnScroll_wxTimeSlider, self.wxTimeSlider)
         self.Bind(wx.EVT_BUTTON, self.OnButton_CMarkBtn, id=xrc.XRCID('CMarkBtn'))
         self.Bind(wx.EVT_BUTTON, self.OnButton_CCancelBtn, id=xrc.XRCID('CCancelBtn'))
         self.Bind(wx.EVT_CLOSE, self.OnClose)
@@ -105,6 +116,18 @@ class xrcCMarkDlg(wx.Dialog):
         # Replace with event handler code
         print "OnRadiobox_CRadio_subType()"
 #!XRCED:end-block:xrcCMarkDlg.OnRadiobox_CRadio_subType        
+
+#!XRCED:begin-block:xrcCMarkDlg.OnScroll_wxTimeSlider
+    def OnScroll_wxTimeSlider(self, evt):
+        # Replace with event handler code
+        print "OnScroll_wxTimeSlider()"
+#!XRCED:end-block:xrcCMarkDlg.OnScroll_wxTimeSlider        
+
+#!XRCED:begin-block:xrcCMarkDlg.OnScroll_wxTimeSlider
+    def OnScroll_wxTimeSlider(self, evt):
+        # Replace with event handler code
+        print "OnScroll_wxTimeSlider()"
+#!XRCED:end-block:xrcCMarkDlg.OnScroll_wxTimeSlider        
 
 #!XRCED:begin-block:xrcCMarkDlg.OnButton_CMarkBtn
     def OnButton_CMarkBtn(self, evt):
@@ -123,6 +146,38 @@ class xrcCMarkDlg(wx.Dialog):
         # Replace with event handler code
         print "OnClose()"
 #!XRCED:end-block:xrcCMarkDlg.OnClose        
+
+
+class xrcCReportFrame(wx.Frame):
+#!XRCED:begin-block:xrcCReportFrame.PreCreate
+    def PreCreate(self, pre):
+        """ This function is called during the class's initialization.
+        
+        Override it for custom setup before the window is created usually to
+        set additional window styles using SetWindowStyle() and SetExtraStyle().
+        """
+        pass
+        
+#!XRCED:end-block:xrcCReportFrame.PreCreate
+
+    def __init__(self, parent):
+        # Two stage creation (see http://wiki.wxpython.org/index.cgi/TwoStageCreation)
+        pre = wx.PreFrame()
+        self.PreCreate(pre)
+        get_resources().LoadOnFrame(pre, parent, "CReportFrame")
+        self.PostCreate(pre)
+
+        # Define variables for the controls, bind event handlers
+        self.CApplyButton = xrc.XRCCTRL(self, "CApplyButton")
+        self.CReportListCtrl = xrc.XRCCTRL(self, "CReportListCtrl")
+
+        self.Bind(wx.EVT_BUTTON, self.OnButton_CApplyButton, self.CApplyButton)
+
+#!XRCED:begin-block:xrcCReportFrame.OnButton_CApplyButton
+    def OnButton_CApplyButton(self, evt):
+        # Replace with event handler code
+        print "OnButton_CApplyButton()"
+#!XRCED:end-block:xrcCReportFrame.OnButton_CApplyButton        
 
 
 
