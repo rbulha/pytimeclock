@@ -29,6 +29,19 @@
               </object>
             </object>
             <object class="spacer">
+              <size>50,-1</size>
+            </object>
+            <object class="sizeritem">
+              <object class="wxBitmapButton" name="CReportButton">
+                <bitmap>..\res\S trooper.ico</bitmap>
+                <XRCED>
+                  <events>EVT_BUTTON</events>
+                  <assign_var>1</assign_var>
+                </XRCED>
+              </object>
+            </object>
+            
+            <object class="spacer">
               <size>200,-1</size>
             </object>
             <object class="sizeritem">
@@ -110,6 +123,21 @@
               </object>
               <label>Date and time</label>
               <orient>wxVERTICAL</orient>
+              <object class="sizeritem">
+                <object class="wxSlider" name="wxTimeSlider">
+                  <value>30</value>
+                  <min>0</min>
+                  <max>59</max>
+                  <tickfreq>1</tickfreq>
+                  <pagesize>10</pagesize>
+                  <linesize>1</linesize>
+                  <XRCED>
+                    <events>EVT_SCROLL|EVT_SCROLL</events>
+                    <assign_var>1</assign_var>
+                  </XRCED>
+                </object>
+                <flag>wxALL|wxEXPAND</flag>
+              </object>
             </object>
             <flag>wxEXPAND|wxALIGN_CENTRE_VERTICAL|wxALIGN_CENTRE_HORIZONTAL</flag>
           </object>
@@ -172,5 +200,49 @@
     <XRCED>
       <events>EVT_CLOSE</events>
     </XRCED>
+  </object>
+  <object class="wxFrame" name="CReportFrame">
+    <object class="wxBoxSizer">
+      <orient>wxVERTICAL</orient>
+      <object class="sizeritem">
+        <object class="wxPanel">
+          <object class="wxBoxSizer">
+            <orient>wxVERTICAL</orient>
+            <object class="sizeritem">
+              <object class="wxBoxSizer">
+                <object class="sizeritem">
+                  <object class="wxTextCtrl"/>
+                </object>
+                <object class="sizeritem">
+                  <object class="wxButton" name="CApplyButton">
+                    <label>APPLY</label>
+                    <XRCED>
+                      <events>EVT_BUTTON</events>
+                      <assign_var>1</assign_var>
+                    </XRCED>
+                  </object>
+                </object>
+                <orient>wxHORIZONTAL</orient>
+              </object>
+              <flag>wxALL|wxEXPAND</flag>
+            </object>
+            <object class="sizeritem">
+              <object class="wxPanel" name="CReportListCtrl">
+                <XRCED>
+                  <assign_var>1</assign_var>
+                </XRCED>
+              </object>
+              <option>1</option>
+              <flag>wxALL|wxEXPAND</flag>
+            </object>
+          </object>
+        </object>
+        <option>1</option>
+        <flag>wxALL|wxEXPAND|wxGROW</flag>
+      </object>
+    </object>
+    <title>Report</title>
+    <centered>1</centered>
+    <style>wxDEFAULT_FRAME_STYLE</style>
   </object>
 </resource>
