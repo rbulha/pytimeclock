@@ -8,6 +8,7 @@ from GUI_xrc import xrcCMarkDlg
 from PontoDB    import CPontoDB
 from BookMark   import CColoredGauge
 from Milestones import CMilestonePanel
+from Report     import CReport
 
 class CTrayBar(wx.TaskBarIcon):
     def __init__(self, parent):
@@ -70,7 +71,9 @@ class CTrayBar(wx.TaskBarIcon):
 class CDialogMark(xrcCMarkDlg):
     def __init__(self,parent):
         xrcCMarkDlg.__init__(self, parent)
-        self.cTimeStamp.SetValue(time.strftime("%H:%M:%S %d/%m/%Y",time.localtime()))
+        time_stamp = time.localtime()
+        self.cTimeStamp.SetValue(time.strftime("%H:%M:%S %d/%m/%Y",time_stamp))
+        self.wxTimeSlider.SetValue(time_stamp.tm_min)
     def OnButton_CMarkBtn(self, evt):
         print '[CDialogMark] - Type:',self.CRadio_Type.GetSelection()
         print '[CDialogMark] - subType:',self.CRadio_subType.GetSelection() 
@@ -87,7 +90,21 @@ class CDialogMark(xrcCMarkDlg):
                 sub[self.CRadio_subType.GetSelection()], \
                 self.CCommentTextCtrl.GetValue(),        \
                 time.strptime(self.cTimeStamp.GetValue(),"%H:%M:%S %d/%m/%Y"))
-             
+    def OnScroll_wxTimeSlider(self, evt):
+        #print '[CDialogMark][OnScroll_wxTimeSlider] - evt: ',evt.GetPosition()  
+        time_stamp = time.strptime(self.cTimeStamp.GetValue(),"%H:%M:%S %d/%m/%Y")
+        #time_stamp[4] = evt.GetPosition()
+        time_stamp_aux = (time_stamp.tm_year,
+                          time_stamp.tm_mon,
+                          time_stamp.tm_mday,
+                          time_stamp.tm_hour,
+                          evt.GetPosition(),
+                          time_stamp.tm_sec,
+                          time_stamp.tm_wday,
+                          time_stamp.tm_yday,
+                          time_stamp.tm_isdst)
+        self.cTimeStamp.SetValue(time.strftime("%H:%M:%S %d/%m/%Y",time_stamp_aux))
+              
 class CCRelogioFrame(xrcCRelogioFrame):
     def __init__(self, parent):
         xrcCRelogioFrame.__init__(self, parent)
@@ -115,7 +132,6 @@ class CCRelogioFrame(xrcCRelogioFrame):
         self.wxFrameBoxSizer.Add(self.ColoredGauge, 1, wx.EXPAND|wx.ALL)
         
         self.ColoredGauge.RefreshMark()
-        
         
         #MilestoneBox = wx.StaticBox(self, -1, "Milestones")
         #MilestoneBox.SetBackgroundColour(wx.LIGHT_GREY)
@@ -184,7 +200,10 @@ class CCRelogioFrame(xrcCRelogioFrame):
         print '[CCRelogioFrame.OnButton_ExitBtn] - Destroy'
         self.Destroy()
         wx.GetApp().ExitMainLoop()
-       
+    def OnButton_CReportButton(self, evt):
+        self.cReportFrame = CReport(None,self.cPontoDB)
+        self.cReportFrame.Show(True)
+        
 class CRelogioApp(wx.App):
     def __init__(self):
         wx.App.__init__(self, redirect=False)   
