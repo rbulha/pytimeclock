@@ -40,7 +40,6 @@
                 </XRCED>
               </object>
             </object>
-            
             <object class="spacer">
               <size>200,-1</size>
             </object>
@@ -211,7 +210,30 @@
             <object class="sizeritem">
               <object class="wxBoxSizer">
                 <object class="sizeritem">
-                  <object class="wxTextCtrl"/>
+                  <object class="wxStaticText">
+                    <label>  from date:  </label>
+                  </object>
+                </object>
+                <object class="sizeritem">
+                  <object class="wxTextCtrl" name="CStartTimeText">
+                    <value>01/01/2011</value>
+                    <XRCED>
+                      <assign_var>1</assign_var>
+                    </XRCED>
+                  </object>
+                </object>
+                <object class="sizeritem">
+                  <object class="wxStaticText">
+                    <label>  to:  </label>
+                  </object>
+                </object>
+                <object class="sizeritem">
+                  <object class="wxTextCtrl" name="CStopTimeText">
+                    <value>11/01/2011</value>
+                    <XRCED>
+                      <assign_var>1</assign_var>
+                    </XRCED>
+                  </object>
                 </object>
                 <object class="sizeritem">
                   <object class="wxButton" name="CApplyButton">
