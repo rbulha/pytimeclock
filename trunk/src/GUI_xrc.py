@@ -172,6 +172,9 @@ class xrcCReportFrame(wx.Frame):
         self.CStopTimeText = xrc.XRCCTRL(self, "CStopTimeText")
         self.CApplyButton = xrc.XRCCTRL(self, "CApplyButton")
         self.CReportListCtrl = xrc.XRCCTRL(self, "CReportListCtrl")
+        self.cCHTotalText = xrc.XRCCTRL(self, "cCHTotalText")
+        self.cHETotalText = xrc.XRCCTRL(self, "cHETotalText")
+        self.cCPTotalText = xrc.XRCCTRL(self, "cCPTotalText")
 
         self.Bind(wx.EVT_BUTTON, self.OnButton_CApplyButton, self.CApplyButton)
 

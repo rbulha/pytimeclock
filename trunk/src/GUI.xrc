@@ -29,11 +29,12 @@
               </object>
             </object>
             <object class="spacer">
-              <size>50,-1</size>
+              <size>15,-1</size>
             </object>
             <object class="sizeritem">
               <object class="wxBitmapButton" name="CReportButton">
-                <bitmap>..\res\S trooper.ico</bitmap>
+                <bitmap>..\res\report_32.png</bitmap>
+                <tooltip>Open report</tooltip>
                 <XRCED>
                   <events>EVT_BUTTON</events>
                   <assign_var>1</assign_var>
@@ -247,6 +248,7 @@
                 <orient>wxHORIZONTAL</orient>
               </object>
               <flag>wxALL|wxEXPAND</flag>
+              <border>3</border>
             </object>
             <object class="sizeritem">
               <object class="wxPanel" name="CReportListCtrl">
@@ -257,10 +259,62 @@
               <option>1</option>
               <flag>wxALL|wxEXPAND</flag>
             </object>
+            <object class="sizeritem">
+              <object class="wxPanel" name="cReportStatisPanel">
+                <object class="wxBoxSizer">
+                  <orient>wxHORIZONTAL</orient>
+                  <object class="sizeritem">
+                    <object class="wxStaticText">
+                      <label> Horas trabalhadas: </label>
+                      <style>wxALIGN_CENTRE</style>
+                    </object>
+                    <flag>wxALIGN_CENTRE_VERTICAL|wxALIGN_CENTRE_HORIZONTAL</flag>
+                  </object>
+                  <object class="sizeritem">
+                    <object class="wxTextCtrl" name="cCHTotalText">
+                      <XRCED>
+                        <assign_var>1</assign_var>
+                      </XRCED>
+                    </object>
+                  </object>
+                  <object class="sizeritem">
+                    <object class="wxStaticText">
+                      <label> Horas extras: </label>
+                      <style>wxALIGN_CENTRE</style>
+                    </object>
+                    <flag>wxALIGN_CENTRE_VERTICAL|wxALIGN_CENTRE_HORIZONTAL</flag>
+                  </object>
+                  <object class="sizeritem">
+                    <object class="wxTextCtrl" name="cHETotalText">
+                      <XRCED>
+                        <assign_var>1</assign_var>
+                      </XRCED>
+                    </object>
+                  </object>
+                  <object class="sizeritem">
+                    <object class="wxStaticText">
+                      <label> Compensar:  </label>
+                      <style>wxALIGN_CENTRE</style>
+                    </object>
+                    <flag>wxALIGN_CENTRE_VERTICAL|wxALIGN_CENTRE_HORIZONTAL</flag>
+                  </object>
+                  <object class="sizeritem">
+                    <object class="wxTextCtrl" name="cCPTotalText">
+                      <XRCED>
+                        <assign_var>1</assign_var>
+                      </XRCED>
+                    </object>
+                  </object>
+                </object>
+              </object>
+              <flag>wxALL|wxEXPAND</flag>
+              <border>3</border>
+            </object>
           </object>
         </object>
         <option>1</option>
         <flag>wxALL|wxEXPAND|wxGROW</flag>
+        <border>3</border>
       </object>
     </object>
     <title>Report</title>
