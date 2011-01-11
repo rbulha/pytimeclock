@@ -168,6 +168,8 @@ class xrcCReportFrame(wx.Frame):
         self.PostCreate(pre)
 
         # Define variables for the controls, bind event handlers
+        self.CStartTimeText = xrc.XRCCTRL(self, "CStartTimeText")
+        self.CStopTimeText = xrc.XRCCTRL(self, "CStopTimeText")
         self.CApplyButton = xrc.XRCCTRL(self, "CApplyButton")
         self.CReportListCtrl = xrc.XRCCTRL(self, "CReportListCtrl")
 
