@@ -81,17 +81,9 @@ class CReportVirtualList(wx.ListCtrl):
             elif col == 7:
                 return str(self.week_day_ch[self.Report_date_list[item]['DATE'].weekday()])
             elif col == 8: #->HE
-                if self.Report_date_list[item]['CH'] > self.week_day_ch[self.Report_date_list[item]['DATE'].weekday()]:
-                    HE_delta = self.Report_date_list[item]['CH'] - self.week_day_ch[self.Report_date_list[item]['DATE'].weekday()]
-                else:    
-                    HE_delta = timedelta(0)
-                return str(HE_delta)
+                return str(self.Report_date_list[item]['HE'])
             elif col == 9: #->CP
-                if self.Report_date_list[item]['CH'] < self.week_day_ch[self.Report_date_list[item]['DATE'].weekday()]:
-                    HE_delta = self.week_day_ch[self.Report_date_list[item]['DATE'].weekday()] - self.Report_date_list[item]['CH']
-                else:    
-                    HE_delta = timedelta(0)
-                return str(HE_delta)
+                return str(self.Report_date_list[item]['CP'])
             elif col in [2,3,4,5]:
                 day_marks = self.Report_date_list[item]['MARKS']
                 if len(day_marks) > 0:
@@ -109,10 +101,24 @@ class CReportVirtualList(wx.ListCtrl):
 
     def OnGetItemAttr(self, item):
         return None
+    def GetCPSum(self):
+        cp_sum = timedelta(0)
+        for report_item in self.Report_date_list:
+            cp_sum = cp_sum + report_item['CP']
+        return cp_sum    
+    def GetHESum(self):
+        he_sum = timedelta(0)
+        for report_item in self.Report_date_list:
+            he_sum = he_sum + report_item['HE']
+        return he_sum    
+    def GetCHSum(self):
+        ch_sum = timedelta(0)
+        for report_item in self.Report_date_list:
+            ch_sum = ch_sum + report_item['CH']
+        return ch_sum    
     def ApplyRange(self,start_date,end_date):
         start_date_struct = time.strptime(start_date,"%d/%m/%Y")
         end_date_struct = time.strptime(end_date,"%d/%m/%Y")
-        
         cStart_date = date(start_date_struct.tm_year,start_date_struct.tm_mon,start_date_struct.tm_mday)
         cEnd_date = date(end_date_struct.tm_year,end_date_struct.tm_mon,end_date_struct.tm_mday)
         if cEnd_date > cStart_date:
@@ -120,7 +126,6 @@ class CReportVirtualList(wx.ListCtrl):
             del self.Report_date_list
             self.Report_date_list = []
             self.DeleteAllItems()
-
             for iday in range(0,delta.days+1):
                 inter_date = cStart_date + timedelta(days=iday)
                 report_entry = {}
@@ -149,14 +154,19 @@ class CReportVirtualList(wx.ListCtrl):
                         time_out = None
                 report_entry['CH'] = delta_time
                 #print delta_time 
+                #->HE
+                if delta_time > self.week_day_ch[inter_date.weekday()]:
+                    report_entry['HE'] = delta_time - self.week_day_ch[inter_date.weekday()]
+                else:    
+                    report_entry['HE'] = timedelta(0)
+                #->CP
+                if delta_time < self.week_day_ch[inter_date.weekday()]:
+                    report_entry['CP'] = self.week_day_ch[inter_date.weekday()] - delta_time
+                else:    
+                    report_entry['CP'] = timedelta(0)
+                
                 self.Report_date_list.append(report_entry) 
                 #print 'outra data'
-                         
-            '''   
-            self.Report_date_list.append("09/01/2011")
-            self.Report_date_list.append("10/01/2011")
-            self.Report_date_list.append("11/01/2011")
-            '''       
             self.SetItemCount(len(self.Report_date_list))
             print len(self.Report_date_list)
         
@@ -171,6 +181,10 @@ class CReport(xrcCReportFrame):
         '''
         xrcCReportFrame.__init__(self, parent)
         
+        iconFile = "../res/report.ico"
+        icon = wx.Icon(iconFile, wx.BITMAP_TYPE_ICO)
+        self.SetIcon(icon)
+        
         self.cPontDB = PontoDB
         
         sizer = wx.BoxSizer(wx.VERTICAL)
@@ -179,10 +193,15 @@ class CReport(xrcCReportFrame):
         sizer.Add(self.cReportVirtual, 1, wx.EXPAND)
         self.CReportListCtrl.SetSizer(sizer)
         self.CReportListCtrl.SetAutoLayout(True)  
-        self.SetSize((600,400))
+        self.SetSize((900,400))
     def OnButton_CApplyButton(self, evt):
         start_time_text = self.CStartTimeText.GetValue()
         stop_time_text = self.CStopTimeText.GetValue()
         if len(start_time_text) > 0 and len(stop_time_text) > 0:
             self.cReportVirtual.ApplyRange(start_time_text,stop_time_text)     
-        
+            self.cCHTotalText.SetValue(str(self.cReportVirtual.GetCHSum()))
+            self.cHETotalText.SetValue(str(self.cReportVirtual.GetHESum()))
+            self.cCPTotalText.SetValue(str(self.cReportVirtual.GetCPSum()))
+            
+
+                         

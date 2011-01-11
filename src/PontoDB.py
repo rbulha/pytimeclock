@@ -1,6 +1,8 @@
 # -*- coding: UTF-8 -*-
 import time
 import shelve
+import dbhash
+import anydbm
 import sys
 import os
 
