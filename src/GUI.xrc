@@ -10,7 +10,7 @@
           <object class="wxStaticBoxSizer">
             <object class="sizeritem">
               <object class="wxBitmapButton" name="AddMarkBtn">
-                <bitmap>..\res\clock.png</bitmap>
+                <bitmap>..\res\clock_flat_32.ico</bitmap>
                 <tooltip>Add a temporal mark</tooltip>
                 <XRCED>
                   <events>EVT_BUTTON</events>
@@ -18,10 +18,11 @@
                 </XRCED>
               </object>
             </object>
+            
             <object class="sizeritem">
-              <object class="wxBitmapButton" name="ExitBtn">
-                <bitmap>..\res\saida.png</bitmap>
-                <tooltip>Exit</tooltip>
+              <object class="wxBitmapButton" name="CReportButton">
+                <bitmap>..\res\report_32.png</bitmap>
+                <tooltip>Open report</tooltip>
                 <XRCED>
                   <events>EVT_BUTTON</events>
                   <assign_var>1</assign_var>
@@ -31,10 +32,11 @@
             <object class="spacer">
               <size>15,-1</size>
             </object>
+            
             <object class="sizeritem">
-              <object class="wxBitmapButton" name="CReportButton">
-                <bitmap>..\res\report_32.png</bitmap>
-                <tooltip>Open report</tooltip>
+              <object class="wxBitmapButton" name="ExitBtn">
+                <bitmap>..\res\saida.png</bitmap>
+                <tooltip>Exit</tooltip>
                 <XRCED>
                   <events>EVT_BUTTON</events>
                   <assign_var>1</assign_var>
@@ -124,19 +126,103 @@
               <label>Date and time</label>
               <orient>wxVERTICAL</orient>
               <object class="sizeritem">
-                <object class="wxSlider" name="wxTimeSlider">
-                  <value>30</value>
-                  <min>0</min>
-                  <max>59</max>
-                  <tickfreq>1</tickfreq>
-                  <pagesize>10</pagesize>
-                  <linesize>1</linesize>
-                  <XRCED>
-                    <events>EVT_SCROLL|EVT_SCROLL</events>
-                    <assign_var>1</assign_var>
-                  </XRCED>
+                <object class="wxBoxSizer">
+                  <orient>wxHORIZONTAL</orient>
+                  <object class="sizeritem">
+                    <object class="wxBoxSizer">
+                      <orient>wxVERTICAL</orient>
+                      <object class="sizeritem">
+                        <object class="wxSlider" name="wxTimeSliderHour">
+                          <value>12</value>
+                          <min>0</min>
+                          <max>23</max>
+                          <tickfreq>1</tickfreq>
+                          <pagesize>10</pagesize>
+                          <linesize>1</linesize>
+                          <XRCED>
+                            <events>EVT_SCROLL</events>
+                            <assign_var>1</assign_var>
+                          </XRCED>
+                        </object>
+                      </object>
+                      <object class="sizeritem">
+                        <object class="wxSlider" name="wxTimeSlider">
+                          <value>30</value>
+                          <min>0</min>
+                          <max>59</max>
+                          <tickfreq>1</tickfreq>
+                          <pagesize>10</pagesize>
+                          <linesize>1</linesize>
+                          <XRCED>
+                            <events>EVT_SCROLL</events>
+                            <assign_var>1</assign_var>
+                          </XRCED>
+                        </object>
+                      </object>
+                      <object class="sizeritem">
+                        <object class="wxSlider" name="wxTimeSliderSec">
+                          <value>30</value>
+                          <min>0</min>
+                          <max>59</max>
+                          <tickfreq>1</tickfreq>
+                          <pagesize>10</pagesize>
+                          <linesize>1</linesize>
+                          <XRCED>
+                            <events>EVT_SCROLL</events>
+                            <assign_var>1</assign_var>
+                          </XRCED>
+                        </object>
+                      </object>
+                    </object>
+                  </object>
+                  <object class="sizeritem">
+                    <object class="wxBoxSizer">
+                      <orient>wxVERTICAL</orient>
+                      <object class="sizeritem">
+                        <object class="wxSlider" name="wxTimeSliderDay">
+                          <value>12</value>
+                          <min>1</min>
+                          <max>31</max>
+                          <tickfreq>1</tickfreq>
+                          <pagesize>10</pagesize>
+                          <linesize>1</linesize>
+                          <XRCED>
+                            <events>EVT_SCROLL</events>
+                            <assign_var>1</assign_var>
+                          </XRCED>
+                        </object>
+                      </object>
+                      <object class="sizeritem">
+                        <object class="wxSlider" name="wxTimeSliderMonth">
+                          <value>6</value>
+                          <min>1</min>
+                          <max>12</max>
+                          <tickfreq>1</tickfreq>
+                          <pagesize>10</pagesize>
+                          <linesize>1</linesize>
+                          <XRCED>
+                            <events>EVT_SCROLL</events>
+                            <assign_var>1</assign_var>
+                          </XRCED>
+                        </object>
+                      </object>
+                      <object class="sizeritem">
+                        <object class="wxSlider" name="wxTimeSliderYear">
+                          <value>6</value>
+                          <min>2000</min>
+                          <max>9999</max>
+                          <tickfreq>1</tickfreq>
+                          <pagesize>10</pagesize>
+                          <linesize>1</linesize>
+                          <XRCED>
+                            <events>EVT_SCROLL</events>
+                            <assign_var>1</assign_var>
+                          </XRCED>
+                        </object>
+                      </object>
+                    </object>
+                  </object>
                 </object>
-                <flag>wxALL|wxEXPAND</flag>
               </object>
             </object>
             <flag>wxEXPAND|wxALIGN_CENTRE_VERTICAL|wxALIGN_CENTRE_HORIZONTAL</flag>
@@ -276,6 +362,7 @@
                         <assign_var>1</assign_var>
                       </XRCED>
                     </object>
+                    <flag>wxALIGN_CENTRE_VERTICAL|wxALIGN_CENTRE_HORIZONTAL</flag>
                   </object>
                   <object class="sizeritem">
                     <object class="wxStaticText">
@@ -290,6 +377,7 @@
                         <assign_var>1</assign_var>
                       </XRCED>
                     </object>
+                    <flag>wxALIGN_CENTRE_VERTICAL|wxALIGN_CENTRE_HORIZONTAL</flag>
                   </object>
                   <object class="sizeritem">
                     <object class="wxStaticText">
@@ -304,6 +392,58 @@
                         <assign_var>1</assign_var>
                       </XRCED>
                     </object>
+                    <flag>wxALIGN_CENTRE_VERTICAL|wxALIGN_CENTRE_HORIZONTAL</flag>
+                  </object>
+                  <object class="sizeritem">
+                    <object class="wxStaticText">
+                      <label> Banco de horas:  </label>
+                      <style>wxALIGN_CENTRE</style>
+                    </object>
+                    <flag>wxALIGN_CENTRE_VERTICAL|wxALIGN_CENTRE_HORIZONTAL</flag>
+                  </object>
+                  <object class="sizeritem">
+                    <object class="wxToggleButton" name="cBHToggleButton">
+                      <size>24,24</size>
+                      <label>+</label>
+                      <XRCED>
+                        <events>EVT_TOGGLEBUTTON</events>
+                        <assign_var>1</assign_var>
+                      </XRCED>
+                    </object>
+                  </object>
+                  <object class="sizeritem">
+                    <object class="wxTextCtrl" name="cBHTotalText">
+                      <XRCED>
+                        <assign_var>1</assign_var>
+                      </XRCED>
+                    </object>
+                    <flag>wxALIGN_CENTRE_VERTICAL|wxALIGN_CENTRE_HORIZONTAL</flag>
+                  </object>
+                  <object class="sizeritem">
+                    <object class="wxStaticText">
+                      <label>  =   Saldo: </label>
+                      <style>wxALIGN_CENTRE</style>
+                    </object>
+                    <flag>wxALIGN_CENTRE_VERTICAL|wxALIGN_CENTRE_HORIZONTAL</flag>
+                  </object>
+                  <object class="sizeritem">
+                    <object class="wxTextCtrl" name="cSaldoText">
+                      <XRCED>
+                        <assign_var>1</assign_var>
+                      </XRCED>
+                    </object>
+                    <flag>wxALIGN_CENTRE_VERTICAL|wxALIGN_CENTRE_HORIZONTAL</flag>
+                  </object>
+                  <object class="sizeritem">
+                    <object class="wxBitmapButton" name="cSaldoButton">
+                      <size>24,24</size>
+                      <bitmap>..\res\Refresh_24.png</bitmap>
+                      <XRCED>
+                        <events>EVT_BUTTON</events>
+                        <assign_var>1</assign_var>
+                      </XRCED>
+                    </object>
+                    <flag>wxALIGN_CENTRE_VERTICAL|wxALIGN_CENTRE_HORIZONTAL</flag>
                   </object>
                 </object>
               </object>
