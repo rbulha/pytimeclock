@@ -58,6 +58,26 @@ class CPontoDB:
             self.DB[mark]['tipo'] == self.cTypes[tipo]|self.cSubType[subtipo]:
                 return self.DB[mark]
         return None   
+    def has_mark_anywhere(self,timestamp=None,comentario='sem com.',tipo='ENTRADA',subtipo='NORMAL'):
+        if timestamp != None:
+            for mark in self.DB:
+                if self.DB[mark]['time'].tm_year == timestamp.tm_year and \
+                self.DB[mark]['time'].tm_mon == timestamp.tm_mon  and \
+                self.DB[mark]['time'].tm_mday == timestamp.tm_mday and \
+                subtipo != 'EXTRAORDINARIA' and \
+                self.DB[mark]['tipo'] == self.cTypes[tipo]|self.cSubType[subtipo]:
+                    return self.DB[mark]
+                elif self.DB[mark]['time'].tm_year == timestamp.tm_year and \
+                self.DB[mark]['time'].tm_mon == timestamp.tm_mon  and \
+                self.DB[mark]['time'].tm_mday == timestamp.tm_mday and \
+                self.DB[mark]['time'].tm_hour == timestamp.tm_hour and \
+                self.DB[mark]['time'].tm_min == timestamp.tm_min and \
+                subtipo == 'EXTRAORDINARIA' and \
+                self.DB[mark]['tipo'] == self.cTypes[tipo]|self.cSubType[subtipo]:
+                    return self.DB[mark]
+            return None
+        else:
+            return None   
     def DeleteMark(self,target_mark): 
         for mark in self.DB:
             if self.DB[mark]['time'] == target_mark['time'] and \
