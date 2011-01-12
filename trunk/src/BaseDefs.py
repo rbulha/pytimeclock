@@ -8,6 +8,7 @@ class TypeNIcons:
     SAIDA              = 0x20
     MISC               = 0x30
     S_W                = 0x40
+    MILESTONE          = 0x50
     
     BASE_RES_DIR            = "../res/"
         
@@ -50,6 +51,14 @@ class TypeNIcons:
     ICON[S_W][FALCON]   = BASE_RES_DIR+"M_Falcon.ico"
     ICON[S_W][DSTAR]    = BASE_RES_DIR+"DeathStar.ico"
     ICON[S_W][DVADER]   = BASE_RES_DIR+"Darth_Vader.ico"
+    
+    EXTRA_TIME  = 0x01
+    REMAIN_TIME = 0x02
+    
+    ICON[MILESTONE] = {}
+    ICON[MILESTONE][EXTRA_TIME]  = BASE_RES_DIR+"Plus.ico"
+    ICON[MILESTONE][REMAIN_TIME] = BASE_RES_DIR+"time_left.ico"
+    
     
     
     
