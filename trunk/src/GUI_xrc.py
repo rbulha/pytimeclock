@@ -94,13 +94,22 @@ class xrcCMarkDlg(wx.Dialog):
         self.CRadio_Type = xrc.XRCCTRL(self, "CRadio_Type")
         self.CRadio_subType = xrc.XRCCTRL(self, "CRadio_subType")
         self.cTimeStamp = xrc.XRCCTRL(self, "cTimeStamp")
+        self.wxTimeSliderHour = xrc.XRCCTRL(self, "wxTimeSliderHour")
         self.wxTimeSlider = xrc.XRCCTRL(self, "wxTimeSlider")
+        self.wxTimeSliderSec = xrc.XRCCTRL(self, "wxTimeSliderSec")
+        self.wxTimeSliderDay = xrc.XRCCTRL(self, "wxTimeSliderDay")
+        self.wxTimeSliderMonth = xrc.XRCCTRL(self, "wxTimeSliderMonth")
+        self.wxTimeSliderYear = xrc.XRCCTRL(self, "wxTimeSliderYear")
         self.CCommentTextCtrl = xrc.XRCCTRL(self, "CCommentTextCtrl")
 
         self.Bind(wx.EVT_RADIOBOX, self.OnRadiobox_CRadio_Type, self.CRadio_Type)
         self.Bind(wx.EVT_RADIOBOX, self.OnRadiobox_CRadio_subType, self.CRadio_subType)
+        self.Bind(wx.EVT_SCROLL, self.OnScroll_wxTimeSliderHour, self.wxTimeSliderHour)
         self.Bind(wx.EVT_SCROLL, self.OnScroll_wxTimeSlider, self.wxTimeSlider)
-        self.Bind(wx.EVT_SCROLL, self.OnScroll_wxTimeSlider, self.wxTimeSlider)
+        self.Bind(wx.EVT_SCROLL, self.OnScroll_wxTimeSliderSec, self.wxTimeSliderSec)
+        self.Bind(wx.EVT_SCROLL, self.OnScroll_wxTimeSliderDay, self.wxTimeSliderDay)
+        self.Bind(wx.EVT_SCROLL, self.OnScroll_wxTimeSliderMonth, self.wxTimeSliderMonth)
+        self.Bind(wx.EVT_SCROLL, self.OnScroll_wxTimeSliderYear, self.wxTimeSliderYear)
         self.Bind(wx.EVT_BUTTON, self.OnButton_CMarkBtn, id=xrc.XRCID('CMarkBtn'))
         self.Bind(wx.EVT_BUTTON, self.OnButton_CCancelBtn, id=xrc.XRCID('CCancelBtn'))
         self.Bind(wx.EVT_CLOSE, self.OnClose)
@@ -117,17 +126,41 @@ class xrcCMarkDlg(wx.Dialog):
         print "OnRadiobox_CRadio_subType()"
 #!XRCED:end-block:xrcCMarkDlg.OnRadiobox_CRadio_subType        
 
-#!XRCED:begin-block:xrcCMarkDlg.OnScroll_wxTimeSlider
-    def OnScroll_wxTimeSlider(self, evt):
+#!XRCED:begin-block:xrcCMarkDlg.OnScroll_wxTimeSliderHour
+    def OnScroll_wxTimeSliderHour(self, evt):
         # Replace with event handler code
-        print "OnScroll_wxTimeSlider()"
-#!XRCED:end-block:xrcCMarkDlg.OnScroll_wxTimeSlider        
+        print "OnScroll_wxTimeSliderHour()"
+#!XRCED:end-block:xrcCMarkDlg.OnScroll_wxTimeSliderHour        
 
 #!XRCED:begin-block:xrcCMarkDlg.OnScroll_wxTimeSlider
     def OnScroll_wxTimeSlider(self, evt):
         # Replace with event handler code
         print "OnScroll_wxTimeSlider()"
 #!XRCED:end-block:xrcCMarkDlg.OnScroll_wxTimeSlider        
+
+#!XRCED:begin-block:xrcCMarkDlg.OnScroll_wxTimeSliderSec
+    def OnScroll_wxTimeSliderSec(self, evt):
+        # Replace with event handler code
+        print "OnScroll_wxTimeSliderSec()"
+#!XRCED:end-block:xrcCMarkDlg.OnScroll_wxTimeSliderSec        
+
+#!XRCED:begin-block:xrcCMarkDlg.OnScroll_wxTimeSliderDay
+    def OnScroll_wxTimeSliderDay(self, evt):
+        # Replace with event handler code
+        print "OnScroll_wxTimeSliderDay()"
+#!XRCED:end-block:xrcCMarkDlg.OnScroll_wxTimeSliderDay        
+
+#!XRCED:begin-block:xrcCMarkDlg.OnScroll_wxTimeSliderMonth
+    def OnScroll_wxTimeSliderMonth(self, evt):
+        # Replace with event handler code
+        print "OnScroll_wxTimeSliderMonth()"
+#!XRCED:end-block:xrcCMarkDlg.OnScroll_wxTimeSliderMonth        
+
+#!XRCED:begin-block:xrcCMarkDlg.OnScroll_wxTimeSliderYear
+    def OnScroll_wxTimeSliderYear(self, evt):
+        # Replace with event handler code
+        print "OnScroll_wxTimeSliderYear()"
+#!XRCED:end-block:xrcCMarkDlg.OnScroll_wxTimeSliderYear        
 
 #!XRCED:begin-block:xrcCMarkDlg.OnButton_CMarkBtn
     def OnButton_CMarkBtn(self, evt):
@@ -175,14 +208,32 @@ class xrcCReportFrame(wx.Frame):
         self.cCHTotalText = xrc.XRCCTRL(self, "cCHTotalText")
         self.cHETotalText = xrc.XRCCTRL(self, "cHETotalText")
         self.cCPTotalText = xrc.XRCCTRL(self, "cCPTotalText")
+        self.cBHToggleButton = xrc.XRCCTRL(self, "cBHToggleButton")
+        self.cBHTotalText = xrc.XRCCTRL(self, "cBHTotalText")
+        self.cSaldoText = xrc.XRCCTRL(self, "cSaldoText")
+        self.cSaldoButton = xrc.XRCCTRL(self, "cSaldoButton")
 
         self.Bind(wx.EVT_BUTTON, self.OnButton_CApplyButton, self.CApplyButton)
+        self.Bind(wx.EVT_TOGGLEBUTTON, self.OnTogglebutton_cBHToggleButton, self.cBHToggleButton)
+        self.Bind(wx.EVT_BUTTON, self.OnButton_cSaldoButton, self.cSaldoButton)
 
 #!XRCED:begin-block:xrcCReportFrame.OnButton_CApplyButton
     def OnButton_CApplyButton(self, evt):
         # Replace with event handler code
         print "OnButton_CApplyButton()"
 #!XRCED:end-block:xrcCReportFrame.OnButton_CApplyButton        
+
+#!XRCED:begin-block:xrcCReportFrame.OnTogglebutton_cBHToggleButton
+    def OnTogglebutton_cBHToggleButton(self, evt):
+        # Replace with event handler code
+        print "OnTogglebutton_cBHToggleButton()"
+#!XRCED:end-block:xrcCReportFrame.OnTogglebutton_cBHToggleButton        
+
+#!XRCED:begin-block:xrcCReportFrame.OnButton_cSaldoButton
+    def OnButton_cSaldoButton(self, evt):
+        # Replace with event handler code
+        print "OnButton_cSaldoButton()"
+#!XRCED:end-block:xrcCReportFrame.OnButton_cSaldoButton        
 
 
 
