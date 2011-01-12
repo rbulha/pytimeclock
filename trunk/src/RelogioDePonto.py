@@ -24,9 +24,10 @@ class CTrayBar(wx.TaskBarIcon):
         
         self.ID_timeout = wx.NewId()
         self.ID_timeok  = wx.NewId()
-        self.ID_show  = wx.NewId()
-        self.ID_exit  = wx.NewId()
-        self.ID_mark  = wx.NewId()
+        self.ID_show   = wx.NewId()
+        self.ID_exit   = wx.NewId()
+        self.ID_mark   = wx.NewId()
+        self.ID_report = wx.NewId()
         
         self.Bind(wx.EVT_MENU, self.OnTimeout, id=self.ID_timeout)
         self.Bind(wx.EVT_MENU, self.OnTimeOk, id=self.ID_timeok)
@@ -34,7 +35,8 @@ class CTrayBar(wx.TaskBarIcon):
         self.Bind(wx.EVT_MENU, self.OnExit, id=self.ID_exit)
         self.Bind(wx.EVT_MENU, self.parent.OnButton_AddMarkBtn, id=self.ID_mark)
         self.Bind(wx.EVT_TASKBAR_LEFT_DCLICK, self.OnShow)
-      
+        self.Bind(wx.EVT_MENU, self.parent.OnButton_CReportButton, id=self.ID_report)
+        
     def Iconize(self,timeout=False):
         if timeout:
             self.SetIcon(self.icon_timeout,'Relogio de ponto\n(Timeout)')
@@ -65,7 +67,8 @@ class CTrayBar(wx.TaskBarIcon):
         #menu.Append(self.ID_stop, "Stop")
         menu.Append(self.ID_show, "Show")
         menu.Append(self.ID_mark, "Mark")
-        menu.Append(self.ID_exit, "Exit")           
+        menu.Append(self.ID_report, "Report")          
+        menu.Append(self.ID_exit, "Exit")   
         return menu
 
 class CDialogMark(xrcCMarkDlg):
@@ -73,7 +76,14 @@ class CDialogMark(xrcCMarkDlg):
         xrcCMarkDlg.__init__(self, parent)
         time_stamp = time.localtime()
         self.cTimeStamp.SetValue(time.strftime("%H:%M:%S %d/%m/%Y",time_stamp))
+        self.wxTimeSliderHour.SetValue(time_stamp.tm_hour)
         self.wxTimeSlider.SetValue(time_stamp.tm_min)
+        self.wxTimeSliderSec.SetValue(time_stamp.tm_sec)
+        self.wxTimeSliderDay.SetValue(time_stamp.tm_mday)
+        self.wxTimeSliderMonth.SetValue(time_stamp.tm_mon)
+        self.wxTimeSliderYear.SetValue(time_stamp.tm_year)
+        self.wxTimeSliderYear.SetRange(time_stamp.tm_year-50,time_stamp.tm_year+50)
+        
     def OnButton_CMarkBtn(self, evt):
         print '[CDialogMark] - Type:',self.CRadio_Type.GetSelection()
         print '[CDialogMark] - subType:',self.CRadio_subType.GetSelection() 
@@ -104,7 +114,67 @@ class CDialogMark(xrcCMarkDlg):
                           time_stamp.tm_yday,
                           time_stamp.tm_isdst)
         self.cTimeStamp.SetValue(time.strftime("%H:%M:%S %d/%m/%Y",time_stamp_aux))
-              
+    def OnScroll_wxTimeSliderHour(self, evt):
+        time_stamp = time.strptime(self.cTimeStamp.GetValue(),"%H:%M:%S %d/%m/%Y")
+        time_stamp_aux = (time_stamp.tm_year,
+                          time_stamp.tm_mon,
+                          time_stamp.tm_mday,
+                          evt.GetPosition(),
+                          time_stamp.tm_min,
+                          time_stamp.tm_sec,
+                          time_stamp.tm_wday,
+                          time_stamp.tm_yday,
+                          time_stamp.tm_isdst)
+        self.cTimeStamp.SetValue(time.strftime("%H:%M:%S %d/%m/%Y",time_stamp_aux))        
+    def OnScroll_wxTimeSliderSec(self, evt):
+        time_stamp = time.strptime(self.cTimeStamp.GetValue(),"%H:%M:%S %d/%m/%Y")
+        time_stamp_aux = (time_stamp.tm_year,
+                          time_stamp.tm_mon,
+                          time_stamp.tm_mday,
+                          time_stamp.tm_hour,
+                          time_stamp.tm_min,
+                          evt.GetPosition(),
+                          time_stamp.tm_wday,
+                          time_stamp.tm_yday,
+                          time_stamp.tm_isdst)
+        self.cTimeStamp.SetValue(time.strftime("%H:%M:%S %d/%m/%Y",time_stamp_aux))        
+    def OnScroll_wxTimeSliderDay(self, evt):
+        time_stamp = time.strptime(self.cTimeStamp.GetValue(),"%H:%M:%S %d/%m/%Y")
+        time_stamp_aux = (time_stamp.tm_year,
+                          time_stamp.tm_mon,
+                          evt.GetPosition(),
+                          time_stamp.tm_hour,
+                          time_stamp.tm_min,
+                          time_stamp.tm_sec,
+                          time_stamp.tm_wday,
+                          time_stamp.tm_yday,
+                          time_stamp.tm_isdst)
+        self.cTimeStamp.SetValue(time.strftime("%H:%M:%S %d/%m/%Y",time_stamp_aux))        
+    def OnScroll_wxTimeSliderMonth(self, evt):
+        time_stamp = time.strptime(self.cTimeStamp.GetValue(),"%H:%M:%S %d/%m/%Y")
+        time_stamp_aux = (time_stamp.tm_year,
+                          evt.GetPosition(),
+                          time_stamp.tm_mday,
+                          time_stamp.tm_hour,
+                          time_stamp.tm_min,
+                          time_stamp.tm_sec,
+                          time_stamp.tm_wday,
+                          time_stamp.tm_yday,
+                          time_stamp.tm_isdst)
+        self.cTimeStamp.SetValue(time.strftime("%H:%M:%S %d/%m/%Y",time_stamp_aux))        
+    def OnScroll_wxTimeSliderYear(self, evt):
+        time_stamp = time.strptime(self.cTimeStamp.GetValue(),"%H:%M:%S %d/%m/%Y")
+        time_stamp_aux = (evt.GetPosition(),
+                          time_stamp.tm_mon,
+                          time_stamp.tm_mday,
+                          time_stamp.tm_hour,
+                          time_stamp.tm_min,
+                          time_stamp.tm_sec,
+                          time_stamp.tm_wday,
+                          time_stamp.tm_yday,
+                          time_stamp.tm_isdst)
+        self.cTimeStamp.SetValue(time.strftime("%H:%M:%S %d/%m/%Y",time_stamp_aux))        
+                     
 class CCRelogioFrame(xrcCRelogioFrame):
     def __init__(self, parent):
         xrcCRelogioFrame.__init__(self, parent)
@@ -112,7 +182,7 @@ class CCRelogioFrame(xrcCRelogioFrame):
         iconFile = "../res/date.ico"
         icon = wx.Icon(iconFile, wx.BITMAP_TYPE_ICO)
         self.SetIcon(icon)
-        self.SetSize((400,350))
+        self.SetSize((460,350))
         self.RelogioTrayBar = CTrayBar(self)
         self.RelogioTrayBar.Iconize(False)
         self.Bind(wx.EVT_ICONIZE, self.OnIconize)
@@ -174,7 +244,7 @@ class CCRelogioFrame(xrcCRelogioFrame):
         print '[CCRelogioFrame.OnButton_AddMarkBtn] - return: ',returncode
         if returncode >= 0:
             mark = dialog.GetMark()
-            old_mark = self.cPontoDB.has_mark_today(mark[3],mark[2],mark[0],mark[1])
+            old_mark = self.cPontoDB.has_mark_anywhere(mark[3],mark[2],mark[0],mark[1])
             if old_mark != None:
                 dlg = wx.MessageDialog(self, 'Do you want to replace this mark?',
                                        'Ponto',
