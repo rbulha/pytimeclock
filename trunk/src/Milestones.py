@@ -111,13 +111,15 @@ class CMilestonePanel(wx.Panel):
         entrada_almoco = 0.0   
         extra_out = 0.0
         extra_in = 0.0   
-        out_of_office = 0.0  
+        out_of_office = 0.0
+        out_of_office_list = []  
         tempo_lunch = 0.0
         start_time = 0.0
         end_time   = 0.0
         journey_time = 0.0
-        remain_time = 0.0
         estimated_time = 0.0
+        extra_time = 0.0
+        remain_time = 0.0
         for entry in today:
             if entry[3] == 0x11:
                 offset = self.get_xy_offset() 
@@ -137,14 +139,24 @@ class CMilestonePanel(wx.Panel):
             elif entry[3] == 0x12:
                 entrada_almoco = entry[2] + 60*entry[1] + 3600*entry[0] 
             elif entry[3] == 0x23:
-                extra_out = entry[2] + 60*entry[1] + 3600*entry[0]
+                out_of_office_list.append(entry[2] + 60*entry[1] + 3600*entry[0])
+                #extra_out = entry[2] + 60*entry[1] + 3600*entry[0]
             elif entry[3] == 0x13:
+                out_of_office_list.append(entry[2] + 60*entry[1] + 3600*entry[0])
+                '''
                 if extra_out != 0:
                     extra_in = entry[2] + 60*entry[1] + 3600*entry[0]
                     out_of_office = out_of_office + (extra_in - extra_out)
                     extra_out = 0.0
                     extra_in = 0.0   
-        
+                '''
+        if len(out_of_office_list) > 0:
+            out_of_office_list.sort()
+            while len(out_of_office_list) > 1:
+                extra_out = out_of_office_list.pop(0) 
+                extra_in  = out_of_office_list.pop(0)      
+                out_of_office = out_of_office + (extra_in - extra_out)
+                      
         if start_time != 0.0 and end_time != 0.0:
             journey_time = end_time - start_time
         elif start_time != 0.0:
@@ -215,15 +227,15 @@ class CMilestonePanel(wx.Panel):
                                                 CMilestone(self, \
                                                            wx.ID_ANY, \
                                                            offset, \
-                                                           TNI.MISC, \
-                                                           TNI.CLOCK, \
+                                                           TNI.MILESTONE, \
+                                                           TNI.REMAIN_TIME, \
                                                            "Remain", \
                                                            output_text ))  
                 #estimated out time
                 if tempo_lunch > 0:
-                    estimated_time = start_time + journey_time + remain_time + tempo_lunch
+                    estimated_time = start_time + journey_time + remain_time + tempo_lunch + out_of_office
                 else:
-                    estimated_time = start_time + journey_time + remain_time + 5400
+                    estimated_time = start_time + journey_time + remain_time + 5400 + out_of_office
                         
                 offset = self.get_xy_offset()
                 o_hora = estimated_time/3600.0
@@ -237,9 +249,21 @@ class CMilestonePanel(wx.Panel):
                                                            TNI.NORMAL, \
                                                            "Estimated", \
                                                            output_text ))                              
-            else:                                            
-                remain_time = 0  
-
+            else:  #extra time                                          
+                remain_time = 0 
+                extra_time = journey_time - CRPConfig.GetJorneyInSeconds() 
+                offset = self.get_xy_offset()
+                o_hora = extra_time/3600.0
+                o_min  = (extra_time%3600.0)/60
+                output_text = "%02d:%02d h"%(o_hora,o_min)                
+                self.MilestoneCollection.append(\
+                                                CMilestone(self, \
+                                                           wx.ID_ANY, \
+                                                           offset, \
+                                                           TNI.MILESTONE, \
+                                                           TNI.EXTRA_TIME, \
+                                                           "Extra time", \
+                                                           output_text ))
     def DeleteAll(self):
         for bm in self.MilestoneCollection:
             print '[CColoredGauge.DeleteAllBookMarks]destroy: ',bm.Destroy()
