@@ -46,6 +46,7 @@
                 <size>40,40</size>
                 <bitmap>..\res\R2D2.png</bitmap>
                 <tooltip>DEBUG - ERASE DAYLONG</tooltip>
+                <hidden>1</hidden>
                 <XRCED>
                   <events>EVT_BUTTON</events>
                   <assign_var>1</assign_var>
@@ -55,6 +56,16 @@
             </object>
             <label>Toolbar</label>
             <orient>wxHORIZONTAL</orient>
+            <object class="sizeritem">
+              <object class="wxBitmapButton" name="AboutButton">
+                <bitmap>..\res\Help_32.png</bitmap>
+                <XRCED>
+                  <events>EVT_BUTTON</events>
+                  <assign_var>1</assign_var>
+                </XRCED>
+              </object>
+              <flag>wxRIGHT|wxALIGN_RIGHT</flag>
+            </object>
           </object>
         </object>
         <flag>wxEXPAND|wxALIGN_TOP</flag>
