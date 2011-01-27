@@ -39,11 +39,13 @@ class CTrayBar(wx.TaskBarIcon):
         
     def Iconize(self,timeout=False):
         if timeout:
-            self.SetIcon(self.icon_timeout,'Relogio de ponto\n(Timeout)')
+            self.SetIcon(self.icon_timeout,'Time clock\n(Timeout)')
         else:  
-            self.SetIcon(self.icon_timeok,'Relogio de ponto\n')
+            self.SetIcon(self.icon_timeok,'Time clock\nPress the right button to place a mark.')
+            #'Relógio de ponto\nPressione o botão direito para marcar o ponto.')
     
     def OnShow(self, event):
+        self.parent.UpdateInterface()
         self.parent.Show()
         self.parent.Raise()
         self.parent.Restore()
@@ -190,6 +192,8 @@ class CCRelogioFrame(xrcCRelogioFrame):
         
         self.Hide()
         
+        self.SetMinSize((460,350))
+        
         #load data base
         self.cPontoDB = CPontoDB()
         self.cPontoDB.LoadDB()
@@ -234,6 +238,10 @@ class CCRelogioFrame(xrcCRelogioFrame):
         if event.Iconized():
             self.RelogioTrayBar.Iconize(False)
             self.Hide()
+        else:
+            self.UpdateInterface()
+            #self.SetSize(event.GetSize())
+            #self.Refresh()
     def OnButton_ClearAllMarks(self, evt):
         self.ColoredGauge.DeleteAllBookMarks() 
         self.cPontoDB.ClearToday()       
@@ -273,7 +281,14 @@ class CCRelogioFrame(xrcCRelogioFrame):
     def OnButton_CReportButton(self, evt):
         self.cReportFrame = CReport(None,self.cPontoDB)
         self.cReportFrame.Show(True)
-        
+    def UpdateInterface(self):
+        #self.SetSize(self.GetSize())
+        self.MilestonePanel.RefreshMark() 
+        self.MilestonePanel.Refresh()
+        self.ColoredGauge.RefreshMark()
+        self.Refresh()
+    def OnMaximize(self, evt):
+        print '[CCRelogioFrame.OnMaximize]',evt   
 class CRelogioApp(wx.App):
     def __init__(self):
         wx.App.__init__(self, redirect=False)   
