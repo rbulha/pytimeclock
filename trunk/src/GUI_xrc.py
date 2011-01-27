@@ -37,14 +37,17 @@ class xrcCRelogioFrame(wx.Frame):
 
         # Define variables for the controls, bind event handlers
         self.AddMarkBtn = xrc.XRCCTRL(self, "AddMarkBtn")
-        self.ExitBtn = xrc.XRCCTRL(self, "ExitBtn")
         self.CReportButton = xrc.XRCCTRL(self, "CReportButton")
+        self.ExitBtn = xrc.XRCCTRL(self, "ExitBtn")
         self.ClearAllMarks = xrc.XRCCTRL(self, "ClearAllMarks")
+        self.AboutButton = xrc.XRCCTRL(self, "AboutButton")
 
         self.Bind(wx.EVT_BUTTON, self.OnButton_AddMarkBtn, self.AddMarkBtn)
-        self.Bind(wx.EVT_BUTTON, self.OnButton_ExitBtn, self.ExitBtn)
         self.Bind(wx.EVT_BUTTON, self.OnButton_CReportButton, self.CReportButton)
+        self.Bind(wx.EVT_BUTTON, self.OnButton_ExitBtn, self.ExitBtn)
         self.Bind(wx.EVT_BUTTON, self.OnButton_ClearAllMarks, self.ClearAllMarks)
+        self.Bind(wx.EVT_BUTTON, self.OnButton_AboutButton, self.AboutButton)
+        self.Bind(wx.EVT_MAXIMIZE, self.OnMaximize)
 
 #!XRCED:begin-block:xrcCRelogioFrame.OnButton_AddMarkBtn
     def OnButton_AddMarkBtn(self, evt):
@@ -52,23 +55,35 @@ class xrcCRelogioFrame(wx.Frame):
         print "OnButton_AddMarkBtn()"
 #!XRCED:end-block:xrcCRelogioFrame.OnButton_AddMarkBtn        
 
-#!XRCED:begin-block:xrcCRelogioFrame.OnButton_ExitBtn
-    def OnButton_ExitBtn(self, evt):
-        # Replace with event handler code
-        print "OnButton_ExitBtn()"
-#!XRCED:end-block:xrcCRelogioFrame.OnButton_ExitBtn        
-
 #!XRCED:begin-block:xrcCRelogioFrame.OnButton_CReportButton
     def OnButton_CReportButton(self, evt):
         # Replace with event handler code
         print "OnButton_CReportButton()"
 #!XRCED:end-block:xrcCRelogioFrame.OnButton_CReportButton        
 
+#!XRCED:begin-block:xrcCRelogioFrame.OnButton_ExitBtn
+    def OnButton_ExitBtn(self, evt):
+        # Replace with event handler code
+        print "OnButton_ExitBtn()"
+#!XRCED:end-block:xrcCRelogioFrame.OnButton_ExitBtn        
+
 #!XRCED:begin-block:xrcCRelogioFrame.OnButton_ClearAllMarks
     def OnButton_ClearAllMarks(self, evt):
         # Replace with event handler code
         print "OnButton_ClearAllMarks()"
 #!XRCED:end-block:xrcCRelogioFrame.OnButton_ClearAllMarks        
+
+#!XRCED:begin-block:xrcCRelogioFrame.OnButton_AboutButton
+    def OnButton_AboutButton(self, evt):
+        # Replace with event handler code
+        print "OnButton_AboutButton()"
+#!XRCED:end-block:xrcCRelogioFrame.OnButton_AboutButton        
+
+#!XRCED:begin-block:xrcCRelogioFrame.OnMaximize
+    def OnMaximize(self, evt):
+        # Replace with event handler code
+        print "OnMaximize()"
+#!XRCED:end-block:xrcCRelogioFrame.OnMaximize        
 
 
 class xrcCMarkDlg(wx.Dialog):
