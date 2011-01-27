@@ -5,7 +5,7 @@
 Download the compressed file, uncompress in a folder like
   * c:\pytimeclock
 
-We recommend to put the *TimeClock.exe* into startup folder. 
+We recommend to put the *TimeClock* into startup folder. 
 
 Download:
 
