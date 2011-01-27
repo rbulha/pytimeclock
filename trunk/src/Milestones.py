@@ -235,7 +235,7 @@ class CMilestonePanel(wx.Panel):
                 if tempo_lunch > 0:
                     estimated_time = start_time + journey_time + remain_time + tempo_lunch + out_of_office
                 else:
-                    estimated_time = start_time + journey_time + remain_time + 5400 + out_of_office
+                    estimated_time = start_time + journey_time + remain_time + CRPConfig.GetLanchTimeInSeconds() + out_of_office
                         
                 offset = self.get_xy_offset()
                 o_hora = estimated_time/3600.0
@@ -274,7 +274,7 @@ class CMilestonePanel(wx.Panel):
         self.CenterY = size.GetHeight() / 2
         self.Xoffset = size.GetWidth() * 0.03
         self.XbarDist = (size.GetWidth() - (self.Xoffset*2)) / 24
-        print '[CColoredGauge.ResizeConstraints] XbarDist: ',self.XbarDist
+        print '[Milestone.ResizeConstraints] XbarDist: ',self.XbarDist
         self.IconCenterOff = 16 / 2
         
         self.mark_grid = [[10,10,0],[10,30,0],[10,50,0],[10,70,0], \
@@ -284,11 +284,12 @@ class CMilestonePanel(wx.Panel):
     
     def OnSize(self,event):
         self.SetSize(event.GetSize())
-        print '[CColoredGauge.OnSize] event.GetSize: ',event.GetSize()
+        print '[Milestone.OnSize] event.GetSize: ',event.GetSize()
         self.ResizeConstraints(event.GetSize())
         self.Refresh()
                      
     def OnEraseBG(self,event):
+        print '[Milestone.OnEraseBG]'
         #dc = event.GetDC()
         screen_dc = wx.PaintDC(self)
         #self.RefreshMark()
@@ -300,6 +301,7 @@ class CMilestonePanel(wx.Panel):
         dc.DrawRoundedRectangle(5,5,self.GetSize().GetWidth()-10,self.GetSize().GetHeight()-10,5)
         screen_dc.Blit(0,0,self.GetSize().GetWidth(),self.GetSize().GetHeight(),dc,0,0,wx.COPY)        
     def RefreshMark(self):
+        print '[Milestone.RefreshMark]'
         self.DeleteAll()
         self.AnalyseToday()
     def OnMouseMotion(self, event):

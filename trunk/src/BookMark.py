@@ -57,7 +57,7 @@ class CColoredGauge(wx.Panel):
         self.saida_padrao   = None
         #BookMark collection
         self.BookMarkCollection = []
-
+        
         self.ResizeConstraints(self.GetSize())
         #Repaint event
         self.Bind(wx.EVT_PAINT , self.OnEraseBG)
@@ -187,10 +187,10 @@ class CColoredGauge(wx.Panel):
                             if out_of_office:
                                 daylong.SetColour((150,150,150,255))
                             else:                
-                                delay = CRPConfig.H_E_OFICIAL - today['start']     
-                                daylong.SetColour((255-((tempo-delay)*12), \
+                                delay = today['start']#CRPConfig.H_E_OFICIAL - today['start']     
+                                daylong.SetColour((255-((tempo-delay)*20), \
                                                   (tempo-delay)*4, \
-                                                  (tempo-delay)*12,255))#daylong.SetColour((0,0,255,255))
+                                                  (tempo-delay)*20,255))#daylong.SetColour((0,0,255,255))
                     else: 
                         daylong.SetColour((150,150,150,255))
                 dc.SetPen(rainbow)
@@ -226,13 +226,13 @@ class CColoredGauge(wx.Panel):
                                                  (Xoffset_icon,self.Yoffset+self.CenterY+4), \
                                                  TNI.MISC, \
                                                  TNI.QUESTION, \
-                                                 "Perfetc Day",\
-                                                 "full jorney for reference"))
+                                                 "Perfect Day",\
+                                                 "full journey for reference"))
         self.BookMarkCollection.append(CBookMark(self, wx.ID_ANY, \
                                                  (Xoffset_icon,self.Yoffset+self.CenterY-14), \
                                                  TNI.MISC, TNI.QUESTION, \
                                                  "Your Day",\
-                                                 "Survey in real-time you jorney"))
+                                                 "Survey in real-time you journey"))
         Xoffset_icon = self.Xoffset + (CRPConfig.H_E_OFICIAL*self.XbarDist) - self.IconCenterOff 
         self.BookMarkCollection.append(CBookMark(self, wx.ID_ANY, \
                                                  (Xoffset_icon,self.Yoffset+self.CenterY+21), \
@@ -244,10 +244,10 @@ class CColoredGauge(wx.Panel):
                                                  TNI.MISC, TNI.LUNCH, \
                                                  "Lunch","11:36:00")) 
         if nowtime.tm_wday == 4: #Sexta-feira
-            time_stamp = "16:06:00"
+            time_stamp = "16:00:00"
             Xoffset_icon = self.Xoffset + (CRPConfig.H_S_OFICIAL_SEXTA*self.XbarDist) - self.IconCenterOff
         else:   
-            time_stamp = "17:36:00"           
+            time_stamp = "17:30:00"           
             Xoffset_icon = self.Xoffset + (CRPConfig.H_S_OFICIAL*self.XbarDist) - self.IconCenterOff        
         self.BookMarkCollection.append(CBookMark(self, wx.ID_ANY, \
                                                  (Xoffset_icon,self.Yoffset+self.CenterY+21), \

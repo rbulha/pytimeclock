@@ -1,9 +1,6 @@
 <?xml version="1.0" ?>
 <resource>
   <object class="wxFrame" name="CRelogioFrame">
-    <title>Relogio de ponto</title>
-    <centered>1</centered>
-    <style>wxDEFAULT_FRAME_STYLE</style>
     <object class="wxBoxSizer">
       <object class="sizeritem">
         <object class="wxPanel" name="ControlPanel">
@@ -18,7 +15,6 @@
                 </XRCED>
               </object>
             </object>
-            
             <object class="sizeritem">
               <object class="wxBitmapButton" name="CReportButton">
                 <bitmap>..\res\report_32.png</bitmap>
@@ -32,7 +28,6 @@
             <object class="spacer">
               <size>15,-1</size>
             </object>
-            
             <object class="sizeritem">
               <object class="wxBitmapButton" name="ExitBtn">
                 <bitmap>..\res\saida.png</bitmap>
@@ -58,7 +53,7 @@
               </object>
               <flag>wxRIGHT|wxALIGN_RIGHT</flag>
             </object>
-            <label>Control</label>
+            <label>Toolbar</label>
             <orient>wxHORIZONTAL</orient>
           </object>
         </object>
@@ -66,6 +61,12 @@
       </object>
       <orient>wxVERTICAL</orient>
     </object>
+    <title>Relogio de ponto</title>
+    <centered>1</centered>
+    <style>wxDEFAULT_FRAME_STYLE</style>
+    <XRCED>
+      <events>EVT_MAXIMIZE</events>
+    </XRCED>
   </object>
   <object class="wxDialog" name="CMarkDlg">
     <object class="wxBoxSizer">
