@@ -89,6 +89,10 @@ resourcefiles = ('res',
                     '../res/UpDown1Yellow.ico',
                     '../res/UpRight2Blue.ico',
                     '../res/VistaWeatherPreview.jpg',
+                    '../res/clock_flat_32.ico',
+                    '../res/Plus.ico',
+                    '../res/time_left.ico',
+                    '../res/Help_32.png',
                     '../res/W95MBX03.ICO'
                   ]
                 )
