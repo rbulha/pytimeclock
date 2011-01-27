@@ -5,10 +5,12 @@ import time
 from GUI_xrc import xrcCRelogioFrame
 from GUI_xrc import xrcCMarkDlg
 
-from PontoDB    import CPontoDB
-from BookMark   import CColoredGauge
-from Milestones import CMilestonePanel
-from Report     import CReport
+from PontoDB            import CPontoDB
+from BookMark           import CColoredGauge
+from Milestones         import CMilestonePanel
+from Report             import CReport
+from Labeling           import CLabeling as LABELING
+from wx.lib.wordwrap    import wordwrap
 
 class CTrayBar(wx.TaskBarIcon):
     def __init__(self, parent):
@@ -289,6 +291,18 @@ class CCRelogioFrame(xrcCRelogioFrame):
         self.Refresh()
     def OnMaximize(self, evt):
         print '[CCRelogioFrame.OnMaximize]',evt   
+    def OnButton_AboutButton(self, evt):
+        info = wx.AboutDialogInfo()
+        info.Name = LABELING.APP_LONG_NAME
+        info.Version = LABELING.VERSION
+        info.Copyright = LABELING.COPYRIGHT
+        info.Description = wordwrap(
+        LABELING.ABOUT_DESCRIPTION
+        ,650, wx.ClientDC(self))
+        info.WebSite = (LABELING.COMPANY_WEBSITE, LABELING.COMPANY_NAME)
+        info.Developers = [ LABELING.DEVELOPER_MAIN,
+                            LABELING.DEVELOPER_MAIN_CONT ]
+        wx.AboutBox(info)
 class CRelogioApp(wx.App):
     def __init__(self):
         wx.App.__init__(self, redirect=False)   
