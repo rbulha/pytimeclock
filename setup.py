@@ -93,6 +93,7 @@ resourcefiles = ('res',
                     '../res/Plus.ico',
                     '../res/time_left.ico',
                     '../res/Help_32.png',
+                    '../res/Refresh_24.png',
                     '../res/W95MBX03.ICO'
                   ]
                 )
