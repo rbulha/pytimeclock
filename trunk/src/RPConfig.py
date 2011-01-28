@@ -19,3 +19,11 @@ class CRPConfig:
     @staticmethod  
     def GetLanchTimeInSeconds():
         return CRPConfig.T_ALMOCO*3600
+    @staticmethod  
+    def Get_H_S_OFICIAL():
+        nowtime = time.localtime()
+        if nowtime.tm_wday == 4: #Sexta-feira
+            return CRPConfig.H_S_OFICIAL_SEXTA
+        else:
+            return CRPConfig.H_S_OFICIAL
+        
