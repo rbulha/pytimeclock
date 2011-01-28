@@ -159,7 +159,7 @@ class CColoredGauge(wx.Panel):
                 '''
                 Xoffset_g = self.Xoffset+(hora*self.XbarDist)+(mint*(self.XbarDist/60))
             
-                if tempo >= CRPConfig.H_E_OFICIAL and tempo <= CRPConfig.H_S_OFICIAL:
+                if tempo >= CRPConfig.H_E_OFICIAL and tempo <= CRPConfig.Get_H_S_OFICIAL():
                     if tempo >= CRPConfig.H_S_ALMOCO and tempo <= CRPConfig.H_E_ALMOCO:
                         rainbow.SetColour((150,150,150,255))
                     else:
