@@ -108,7 +108,8 @@ class CMilestonePanel(wx.Panel):
         today = self.callback()
         print "[Milestone.AnalyseToday]: ",today
         saida_almoco = 0.0
-        entrada_almoco = 0.0   
+        entrada_almoco = 0.0
+        lunch_marks_list = []   
         extra_out = 0.0
         extra_in = 0.0   
         out_of_office = 0.0
@@ -135,9 +136,11 @@ class CMilestonePanel(wx.Panel):
             elif entry[3] == 0x21:
                 end_time = entry[2] + 60*entry[1] + 3600*entry[0]    
             elif entry[3] == 0x22:
-                saida_almoco = entry[2] + 60*entry[1] + 3600*entry[0]    
+                saida_almoco = entry[2] + 60*entry[1] + 3600*entry[0] 
+                lunch_marks_list.append(saida_almoco)   
             elif entry[3] == 0x12:
-                entrada_almoco = entry[2] + 60*entry[1] + 3600*entry[0] 
+                entrada_almoco = entry[2] + 60*entry[1] + 3600*entry[0]
+                lunch_marks_list.append(entrada_almoco) 
             elif entry[3] == 0x23:
                 out_of_office_list.append(entry[2] + 60*entry[1] + 3600*entry[0])
                 #extra_out = entry[2] + 60*entry[1] + 3600*entry[0]
@@ -162,10 +165,18 @@ class CMilestonePanel(wx.Panel):
         elif start_time != 0.0:
             now_time = time.localtime()[3]*3600 + time.localtime()[4]*60 + time.localtime()[5]
             journey_time = now_time - start_time        
-                                   
-        if (entrada_almoco - saida_almoco) > 0:
+         
+        if len(lunch_marks_list) > 0:
+            lunch_marks_list.sort()
+            while len(lunch_marks_list) > 1:
+                lunch_out = lunch_marks_list.pop(0)
+                lunch_in  = lunch_marks_list.pop(0)
+                tempo_lunch = tempo_lunch + (lunch_in - lunch_out)
+                                           
+        #if (entrada_almoco - saida_almoco) > 0:
+        if tempo_lunch > 0:    
             offset = self.get_xy_offset()
-            tempo_lunch = entrada_almoco - saida_almoco 
+            #tempo_lunch = entrada_almoco - saida_almoco 
             if journey_time > 0 and journey_time > tempo_lunch:
                 journey_time = journey_time - tempo_lunch
             if tempo_lunch < 3600:    
