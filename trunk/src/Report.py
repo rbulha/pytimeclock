@@ -297,10 +297,12 @@ class CReport(xrcCReportFrame):
             
         if HE_delta > CP_delta:
             Saldo_delta = HE_delta - CP_delta
+            self.cSaldoText.SetValue('+'+str(Saldo_delta))
         else:
             Saldo_delta = CP_delta - HE_delta
+            self.cSaldoText.SetValue('-'+str(Saldo_delta))
         
-        self.cSaldoText.SetValue(str(Saldo_delta))
+        
                  
     def OnTogglebutton_cBHToggleButton(self, evt):
         print evt.GetId()
