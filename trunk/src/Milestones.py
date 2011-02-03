@@ -165,7 +165,8 @@ class CMilestonePanel(wx.Panel):
         elif start_time != 0.0:
             now_time = time.localtime()[3]*3600 + time.localtime()[4]*60 + time.localtime()[5]
             journey_time = now_time - start_time        
-         
+        
+        tempo_lunch = 0.0 
         if len(lunch_marks_list) > 0:
             lunch_marks_list.sort()
             while len(lunch_marks_list) > 1:
@@ -196,7 +197,7 @@ class CMilestonePanel(wx.Panel):
                                                            TNI.MISC, \
                                                            TNI.LUNCH, \
                                                            "Lunch time", \
-                                                           "%02d:%02d h"%(tempo_lunch/3600,(journey_time%3600.0)/60)))
+                                                           "%02d:%02d h"%(tempo_lunch/3600,(tempo_lunch%3600.0)/60)))
                 
         if out_of_office > 0:
             offset = self.get_xy_offset()
