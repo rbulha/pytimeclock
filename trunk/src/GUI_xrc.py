@@ -110,21 +110,33 @@ class xrcCMarkDlg(wx.Dialog):
         self.CRadio_subType = xrc.XRCCTRL(self, "CRadio_subType")
         self.cTimeStamp = xrc.XRCCTRL(self, "cTimeStamp")
         self.wxTimeSliderHour = xrc.XRCCTRL(self, "wxTimeSliderHour")
+        self.SpinHour = xrc.XRCCTRL(self, "SpinHour")
         self.wxTimeSlider = xrc.XRCCTRL(self, "wxTimeSlider")
+        self.SpinMin = xrc.XRCCTRL(self, "SpinMin")
         self.wxTimeSliderSec = xrc.XRCCTRL(self, "wxTimeSliderSec")
+        self.SpinSec = xrc.XRCCTRL(self, "SpinSec")
         self.wxTimeSliderDay = xrc.XRCCTRL(self, "wxTimeSliderDay")
+        self.SpinDay = xrc.XRCCTRL(self, "SpinDay")
         self.wxTimeSliderMonth = xrc.XRCCTRL(self, "wxTimeSliderMonth")
+        self.SpinMonth = xrc.XRCCTRL(self, "SpinMonth")
         self.wxTimeSliderYear = xrc.XRCCTRL(self, "wxTimeSliderYear")
+        self.SpinYear = xrc.XRCCTRL(self, "SpinYear")
         self.CCommentTextCtrl = xrc.XRCCTRL(self, "CCommentTextCtrl")
 
         self.Bind(wx.EVT_RADIOBOX, self.OnRadiobox_CRadio_Type, self.CRadio_Type)
         self.Bind(wx.EVT_RADIOBOX, self.OnRadiobox_CRadio_subType, self.CRadio_subType)
         self.Bind(wx.EVT_SCROLL, self.OnScroll_wxTimeSliderHour, self.wxTimeSliderHour)
+        self.Bind(wx.EVT_SPIN, self.OnSpin_SpinHour, self.SpinHour)
         self.Bind(wx.EVT_SCROLL, self.OnScroll_wxTimeSlider, self.wxTimeSlider)
+        self.Bind(wx.EVT_SPIN, self.OnSpin_SpinMin, self.SpinMin)
         self.Bind(wx.EVT_SCROLL, self.OnScroll_wxTimeSliderSec, self.wxTimeSliderSec)
+        self.Bind(wx.EVT_SPIN, self.OnSpin_SpinSec, self.SpinSec)
         self.Bind(wx.EVT_SCROLL, self.OnScroll_wxTimeSliderDay, self.wxTimeSliderDay)
+        self.Bind(wx.EVT_SPIN, self.OnSpin_SpinDay, self.SpinDay)
         self.Bind(wx.EVT_SCROLL, self.OnScroll_wxTimeSliderMonth, self.wxTimeSliderMonth)
+        self.Bind(wx.EVT_SPIN, self.OnSpin_SpinMonth, self.SpinMonth)
         self.Bind(wx.EVT_SCROLL, self.OnScroll_wxTimeSliderYear, self.wxTimeSliderYear)
+        self.Bind(wx.EVT_SPIN, self.OnSpin_SpinYear, self.SpinYear)
         self.Bind(wx.EVT_BUTTON, self.OnButton_CMarkBtn, id=xrc.XRCID('CMarkBtn'))
         self.Bind(wx.EVT_BUTTON, self.OnButton_CCancelBtn, id=xrc.XRCID('CCancelBtn'))
         self.Bind(wx.EVT_CLOSE, self.OnClose)
@@ -147,11 +159,23 @@ class xrcCMarkDlg(wx.Dialog):
         print "OnScroll_wxTimeSliderHour()"
 #!XRCED:end-block:xrcCMarkDlg.OnScroll_wxTimeSliderHour        
 
+#!XRCED:begin-block:xrcCMarkDlg.OnSpin_SpinHour
+    def OnSpin_SpinHour(self, evt):
+        # Replace with event handler code
+        print "OnSpin_SpinHour()"
+#!XRCED:end-block:xrcCMarkDlg.OnSpin_SpinHour        
+
 #!XRCED:begin-block:xrcCMarkDlg.OnScroll_wxTimeSlider
     def OnScroll_wxTimeSlider(self, evt):
         # Replace with event handler code
         print "OnScroll_wxTimeSlider()"
 #!XRCED:end-block:xrcCMarkDlg.OnScroll_wxTimeSlider        
+
+#!XRCED:begin-block:xrcCMarkDlg.OnSpin_SpinMin
+    def OnSpin_SpinMin(self, evt):
+        # Replace with event handler code
+        print "OnSpin_SpinMin()"
+#!XRCED:end-block:xrcCMarkDlg.OnSpin_SpinMin        
 
 #!XRCED:begin-block:xrcCMarkDlg.OnScroll_wxTimeSliderSec
     def OnScroll_wxTimeSliderSec(self, evt):
@@ -159,11 +183,23 @@ class xrcCMarkDlg(wx.Dialog):
         print "OnScroll_wxTimeSliderSec()"
 #!XRCED:end-block:xrcCMarkDlg.OnScroll_wxTimeSliderSec        
 
+#!XRCED:begin-block:xrcCMarkDlg.OnSpin_SpinSec
+    def OnSpin_SpinSec(self, evt):
+        # Replace with event handler code
+        print "OnSpin_SpinSec()"
+#!XRCED:end-block:xrcCMarkDlg.OnSpin_SpinSec        
+
 #!XRCED:begin-block:xrcCMarkDlg.OnScroll_wxTimeSliderDay
     def OnScroll_wxTimeSliderDay(self, evt):
         # Replace with event handler code
         print "OnScroll_wxTimeSliderDay()"
 #!XRCED:end-block:xrcCMarkDlg.OnScroll_wxTimeSliderDay        
+
+#!XRCED:begin-block:xrcCMarkDlg.OnSpin_SpinDay
+    def OnSpin_SpinDay(self, evt):
+        # Replace with event handler code
+        print "OnSpin_SpinDay()"
+#!XRCED:end-block:xrcCMarkDlg.OnSpin_SpinDay        
 
 #!XRCED:begin-block:xrcCMarkDlg.OnScroll_wxTimeSliderMonth
     def OnScroll_wxTimeSliderMonth(self, evt):
@@ -171,11 +207,23 @@ class xrcCMarkDlg(wx.Dialog):
         print "OnScroll_wxTimeSliderMonth()"
 #!XRCED:end-block:xrcCMarkDlg.OnScroll_wxTimeSliderMonth        
 
+#!XRCED:begin-block:xrcCMarkDlg.OnSpin_SpinMonth
+    def OnSpin_SpinMonth(self, evt):
+        # Replace with event handler code
+        print "OnSpin_SpinMonth()"
+#!XRCED:end-block:xrcCMarkDlg.OnSpin_SpinMonth        
+
 #!XRCED:begin-block:xrcCMarkDlg.OnScroll_wxTimeSliderYear
     def OnScroll_wxTimeSliderYear(self, evt):
         # Replace with event handler code
         print "OnScroll_wxTimeSliderYear()"
 #!XRCED:end-block:xrcCMarkDlg.OnScroll_wxTimeSliderYear        
+
+#!XRCED:begin-block:xrcCMarkDlg.OnSpin_SpinYear
+    def OnSpin_SpinYear(self, evt):
+        # Replace with event handler code
+        print "OnSpin_SpinYear()"
+#!XRCED:end-block:xrcCMarkDlg.OnSpin_SpinYear        
 
 #!XRCED:begin-block:xrcCMarkDlg.OnButton_CMarkBtn
     def OnButton_CMarkBtn(self, evt):
@@ -249,6 +297,35 @@ class xrcCReportFrame(wx.Frame):
         # Replace with event handler code
         print "OnButton_cSaldoButton()"
 #!XRCED:end-block:xrcCReportFrame.OnButton_cSaldoButton        
+
+
+class xrcCOneDayReport(wx.Frame):
+#!XRCED:begin-block:xrcCOneDayReport.PreCreate
+    def PreCreate(self, pre):
+        """ This function is called during the class's initialization.
+        
+        Override it for custom setup before the window is created usually to
+        set additional window styles using SetWindowStyle() and SetExtraStyle().
+        """
+        pass
+        
+#!XRCED:end-block:xrcCOneDayReport.PreCreate
+
+    def __init__(self, parent):
+        # Two stage creation (see http://wiki.wxpython.org/index.cgi/TwoStageCreation)
+        pre = wx.PreFrame()
+        self.PreCreate(pre)
+        get_resources().LoadOnFrame(pre, parent, "COneDayReport")
+        self.PostCreate(pre)
+
+        # Define variables for the controls, bind event handlers
+        self.wxTitleText = xrc.XRCCTRL(self, "wxTitleText")
+        self.CReportListCtrl = xrc.XRCCTRL(self, "CReportListCtrl")
+        self.wxStatisticPanel = xrc.XRCCTRL(self, "wxStatisticPanel")
+        self.cCHTotalText = xrc.XRCCTRL(self, "cCHTotalText")
+        self.cHETotalText = xrc.XRCCTRL(self, "cHETotalText")
+        self.cCPTotalText = xrc.XRCCTRL(self, "cCPTotalText")
+
 
 
 
