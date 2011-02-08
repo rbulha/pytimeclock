@@ -102,6 +102,7 @@ binaries = ('bin',[ 'MSVCR71.dll',
                     'msvcp71.dll', 
                     'msvcp90.dll',
                     'msvcr90.dll',
+                    'gdiplus.dll',
                     'GUI.xrc' ]) 
                     
 appdata = ('data',['../data/ponto.dat']) 
