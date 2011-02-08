@@ -11,6 +11,7 @@ from datetime import timedelta
 from datetime import datetime
 
 from GUI_xrc import xrcCReportFrame
+from OneDayReport import COneDayReport
 
 class CReportVirtualList(wx.ListCtrl):
     def __init__(self, parent, PontoDB):
@@ -71,6 +72,7 @@ class CReportVirtualList(wx.ListCtrl):
         self.attr_dayoff.SetBackgroundColour(wx.Colour(240,240,240,50))
         self.attr_dayoff.SetTextColour(wx.Colour(200,200,200,50))
 
+        self.Bind(wx.EVT_LIST_ITEM_ACTIVATED, self.OnItemActivated)
         
         '''
         self.attr1 = wx.ListItemAttr()
@@ -79,9 +81,15 @@ class CReportVirtualList(wx.ListCtrl):
         self.attr2 = wx.ListItemAttr()
         self.attr2.SetBackgroundColour("light blue")
         self.Bind(wx.EVT_LIST_ITEM_SELECTED, self.OnItemSelected)
-        self.Bind(wx.EVT_LIST_ITEM_ACTIVATED, self.OnItemActivated)
         self.Bind(wx.EVT_LIST_ITEM_DESELECTED, self.OnItemDeselected)
         '''
+    def OnItemActivated(self,event):
+        self.currentItem = event.m_itemIndex
+        print "OnItemActivated: %s\nTopItem: %s\n" %(self.GetItemText(self.currentItem), self.GetTopItem())
+        target_day = time.strptime(self.GetItemText(self.currentItem),"%d/%m/%Y")
+        self.cReportFrame = COneDayReport(None,self.cPontDB,datetime(target_day.tm_year,target_day.tm_mon,target_day.tm_mday,target_day.tm_hour,target_day.tm_min,target_day.tm_sec))
+        self.cReportFrame.Show(True)
+
 
     def getColumnText(self, index, col):
         item = self.GetItem(index, col)
@@ -284,8 +292,12 @@ class CReport(xrcCReportFrame):
         #BH_datetime = datetime.strptime(self.cBHTotalText.GetValue(),"%H:%M:%S")
         #BH_delta    = timedelta(hours=BH_date_struct.tm_hour,minutes=BH_date_struct.tm_min,seconds=BH_date_struct.tm_sec)
         try:
-            BH_delta    = timedelta(hours=int(self.cBHTotalText.GetValue()))
+            print '[CReport][OnButton_cSaldoButton] raw: ',float(self.cBHTotalText.GetValue())
+            print '[CReport][OnButton_cSaldoButton] raw sec: ',((float(self.cBHTotalText.GetValue()))*3600)
+            BH_delta    = timedelta(seconds=int((float(self.cBHTotalText.GetValue()))*3600))
+            print '[CReport][OnButton_cSaldoButton] delta: ',BH_delta
         except:
+            raise
             BH_delta    = timedelta(0)
            
         if self.cBHToggleButton.GetValue(): # - BH
