@@ -1,8 +1,8 @@
 # -*- coding: UTF-8 -*-
 import time
 import shelve
-import dbhash
-import anydbm
+import dbhash #incluidos apenas para que o instalador encontre os requisitos
+import anydbm #incluidos apenas para que o instalador encontre os requisitos
 import sys
 import os
 
