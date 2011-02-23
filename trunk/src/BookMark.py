@@ -1,6 +1,8 @@
 import wx
 import time
 
+import datetime
+
 from BaseDefs import TypeNIcons as TNI
 from RPConfig import CRPConfig
 
@@ -237,18 +239,19 @@ class CColoredGauge(wx.Panel):
         self.BookMarkCollection.append(CBookMark(self, wx.ID_ANY, \
                                                  (Xoffset_icon,self.Yoffset+self.CenterY+21), \
                                                  TNI.ENTRADA, TNI.PADRAO, \
-                                                 "Start","07:00:00"))
+                                                 "Start",str(datetime.timedelta(hours=CRPConfig.H_E_OFICIAL))))
         Xoffset_icon = self.Xoffset + (CRPConfig.H_S_ALMOCO*self.XbarDist) - self.IconCenterOff
         self.BookMarkCollection.append(CBookMark(self, wx.ID_ANY, \
                                                  (Xoffset_icon,self.Yoffset+self.CenterY+21), \
                                                  TNI.MISC, TNI.LUNCH, \
-                                                 "Lunch","11:36:00")) 
+                                                 "Lunch",str(datetime.timedelta(hours=CRPConfig.H_S_ALMOCO)))) 
         if nowtime.tm_wday == 4: #Sexta-feira
-            time_stamp = "16:00:00"
+            time_stamp = str(datetime.timedelta(hours=CRPConfig.H_S_OFICIAL_SEXTA)) #.strftime("%H:%M:%S") #"16:00:00"
             Xoffset_icon = self.Xoffset + (CRPConfig.H_S_OFICIAL_SEXTA*self.XbarDist) - self.IconCenterOff
         else:   
-            time_stamp = "17:30:00"           
-            Xoffset_icon = self.Xoffset + (CRPConfig.H_S_OFICIAL*self.XbarDist) - self.IconCenterOff        
+            time_stamp = str(datetime.timedelta(hours=CRPConfig.H_S_OFICIAL)) #.strftime("%H:%M:%S") #"17:30:00"           
+            Xoffset_icon = self.Xoffset + (CRPConfig.H_S_OFICIAL*self.XbarDist) - self.IconCenterOff  
+                  
         self.BookMarkCollection.append(CBookMark(self, wx.ID_ANY, \
                                                  (Xoffset_icon,self.Yoffset+self.CenterY+21), \
                                                  TNI.SAIDA, TNI.PADRAO, \
