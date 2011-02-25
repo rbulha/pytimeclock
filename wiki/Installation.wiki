@@ -9,4 +9,4 @@ We recommend to put the *TimeClock* into startup folder.
 
 Download:
 
-[http://pytimeclock.googlecode.com/files/pytimeclock_v1.zip version v1.0]
+[https://code.google.com/p/pytimeclock/downloads/list release]
