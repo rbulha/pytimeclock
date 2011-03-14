@@ -263,10 +263,15 @@ class CReport(xrcCReportFrame):
         self.CReportListCtrl.SetAutoLayout(True)  
         self.SetSize((900,450))
         
-        self.CStopTimeText.SetValue(time.strftime("%d/%m/%Y"))
         today_time = datetime.fromtimestamp(time.time())
-        delta_time = timedelta(days=21)
+        delta_time = timedelta(days=1)
         start_time = today_time - delta_time 
+        
+        self.CStopTimeText.SetValue(start_time.strftime("%d/%m/%Y"))
+        
+        while(start_time.strftime("%d") != '21'):
+            start_time = start_time - delta_time 
+        
         self.CStartTimeText.SetValue(start_time.strftime("%d/%m/%Y"))
         
         self.cSaldoText.SetValue("00:00:00")
