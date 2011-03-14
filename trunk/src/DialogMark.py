@@ -49,13 +49,21 @@ class CDialogMark(xrcCMarkDlg):
     def GetMark(self):
         tipo = ['ENTRADA','SAIDA']
         sub  = ['NORMAL','ALMOCO','EXTRAORDINARIA']
+        try:
+            time_stamp = time.strptime(self.cTimeStamp.GetValue(),"%H:%M:%S %d/%m/%Y") 
+        except ValueError:
+            time_stamp = time.strftime("%H:%M:%S %d/%m/%Y",time.localtime())
+            
         return (tipo[self.CRadio_Type.GetSelection()],   \
                 sub[self.CRadio_subType.GetSelection()], \
                 self.CCommentTextCtrl.GetValue(),        \
-                time.strptime(self.cTimeStamp.GetValue(),"%H:%M:%S %d/%m/%Y"))
+                time_stamp)
     def OnScroll_wxTimeSlider(self, evt):
         #print '[CDialogMark][OnScroll_wxTimeSlider] - evt: ',evt.GetPosition()  
-        time_stamp = time.strptime(self.cTimeStamp.GetValue(),"%H:%M:%S %d/%m/%Y")
+        try:
+            time_stamp = time.strptime(self.cTimeStamp.GetValue(),"%H:%M:%S %d/%m/%Y")
+        except ValueError:    
+            time_stamp = time.localtime()
         #time_stamp[4] = evt.GetPosition()
         time_stamp_aux = (time_stamp.tm_year,
                           time_stamp.tm_mon,
@@ -66,10 +74,17 @@ class CDialogMark(xrcCMarkDlg):
                           time_stamp.tm_wday,
                           time_stamp.tm_yday,
                           time_stamp.tm_isdst)
-        self.cTimeStamp.SetValue(time.strftime("%H:%M:%S %d/%m/%Y",time_stamp_aux))
+        try:
+            new_time_stamp = time.strftime("%H:%M:%S %d/%m/%Y",time_stamp_aux)
+            self.cTimeStamp.SetValue(new_time_stamp)
+        except ValueError:    
+            self.cTimeStamp.SetValue(time_stamp)
         self.SpinMin.SetValue(evt.GetPosition()) 
     def OnScroll_wxTimeSliderHour(self, evt):
-        time_stamp = time.strptime(self.cTimeStamp.GetValue(),"%H:%M:%S %d/%m/%Y")
+        try:
+            time_stamp = time.strptime(self.cTimeStamp.GetValue(),"%H:%M:%S %d/%m/%Y")
+        except ValueError:    
+            time_stamp = time.localtime()
         time_stamp_aux = (time_stamp.tm_year,
                           time_stamp.tm_mon,
                           time_stamp.tm_mday,
@@ -79,10 +94,17 @@ class CDialogMark(xrcCMarkDlg):
                           time_stamp.tm_wday,
                           time_stamp.tm_yday,
                           time_stamp.tm_isdst)
-        self.cTimeStamp.SetValue(time.strftime("%H:%M:%S %d/%m/%Y",time_stamp_aux))
+        try:
+            new_time_stamp = time.strftime("%H:%M:%S %d/%m/%Y",time_stamp_aux)
+            self.cTimeStamp.SetValue(new_time_stamp)
+        except ValueError:    
+            self.cTimeStamp.SetValue(time_stamp)
         self.SpinHour.SetValue(evt.GetPosition())        
     def OnScroll_wxTimeSliderSec(self, evt):
-        time_stamp = time.strptime(self.cTimeStamp.GetValue(),"%H:%M:%S %d/%m/%Y")
+        try:
+            time_stamp = time.strptime(self.cTimeStamp.GetValue(),"%H:%M:%S %d/%m/%Y")
+        except ValueError:    
+            time_stamp = time.localtime()
         time_stamp_aux = (time_stamp.tm_year,
                           time_stamp.tm_mon,
                           time_stamp.tm_mday,
@@ -92,10 +114,17 @@ class CDialogMark(xrcCMarkDlg):
                           time_stamp.tm_wday,
                           time_stamp.tm_yday,
                           time_stamp.tm_isdst)
-        self.cTimeStamp.SetValue(time.strftime("%H:%M:%S %d/%m/%Y",time_stamp_aux))      
+        try:
+            new_time_stamp = time.strftime("%H:%M:%S %d/%m/%Y",time_stamp_aux)
+            self.cTimeStamp.SetValue(new_time_stamp)
+        except ValueError:    
+            self.cTimeStamp.SetValue(time_stamp)
         self.SpinSec.SetValue(evt.GetPosition())      
     def OnScroll_wxTimeSliderDay(self, evt):
-        time_stamp = time.strptime(self.cTimeStamp.GetValue(),"%H:%M:%S %d/%m/%Y")
+        try:
+            time_stamp = time.strptime(self.cTimeStamp.GetValue(),"%H:%M:%S %d/%m/%Y")
+        except ValueError:    
+            time_stamp = time.localtime()
         time_stamp_aux = (time_stamp.tm_year,
                           time_stamp.tm_mon,
                           evt.GetPosition(),
@@ -105,10 +134,17 @@ class CDialogMark(xrcCMarkDlg):
                           time_stamp.tm_wday,
                           time_stamp.tm_yday,
                           time_stamp.tm_isdst)
-        self.cTimeStamp.SetValue(time.strftime("%H:%M:%S %d/%m/%Y",time_stamp_aux))
+        try:
+            new_time_stamp = time.strftime("%H:%M:%S %d/%m/%Y",time_stamp_aux)
+            self.cTimeStamp.SetValue(new_time_stamp)
+        except ValueError:    
+            self.cTimeStamp.SetValue(time_stamp)
         self.SpinDay.SetValue(evt.GetPosition())        
     def OnScroll_wxTimeSliderMonth(self, evt):
-        time_stamp = time.strptime(self.cTimeStamp.GetValue(),"%H:%M:%S %d/%m/%Y")
+        try:
+            time_stamp = time.strptime(self.cTimeStamp.GetValue(),"%H:%M:%S %d/%m/%Y")
+        except ValueError:    
+            time_stamp = time.localtime()
         time_stamp_aux = (time_stamp.tm_year,
                           evt.GetPosition(),
                           time_stamp.tm_mday,
@@ -118,10 +154,17 @@ class CDialogMark(xrcCMarkDlg):
                           time_stamp.tm_wday,
                           time_stamp.tm_yday,
                           time_stamp.tm_isdst)
-        self.cTimeStamp.SetValue(time.strftime("%H:%M:%S %d/%m/%Y",time_stamp_aux))
+        try:
+            new_time_stamp = time.strftime("%H:%M:%S %d/%m/%Y",time_stamp_aux)
+            self.cTimeStamp.SetValue(new_time_stamp)
+        except ValueError:    
+            self.cTimeStamp.SetValue(time_stamp)
         self.SpinMonth.SetValue(evt.GetPosition())        
     def OnScroll_wxTimeSliderYear(self, evt):
-        time_stamp = time.strptime(self.cTimeStamp.GetValue(),"%H:%M:%S %d/%m/%Y")
+        try:
+            time_stamp = time.strptime(self.cTimeStamp.GetValue(),"%H:%M:%S %d/%m/%Y")
+        except ValueError:    
+            time_stamp = time.localtime()
         time_stamp_aux = (evt.GetPosition(),
                           time_stamp.tm_mon,
                           time_stamp.tm_mday,
@@ -131,10 +174,17 @@ class CDialogMark(xrcCMarkDlg):
                           time_stamp.tm_wday,
                           time_stamp.tm_yday,
                           time_stamp.tm_isdst)
-        self.cTimeStamp.SetValue(time.strftime("%H:%M:%S %d/%m/%Y",time_stamp_aux))
+        try:
+            new_time_stamp = time.strftime("%H:%M:%S %d/%m/%Y",time_stamp_aux)
+            self.cTimeStamp.SetValue(new_time_stamp)
+        except ValueError:    
+            self.cTimeStamp.SetValue(time_stamp)
         self.SpinYear.SetValue(evt.GetPosition())
     def OnSpin_SpinHour(self, evt):
-        time_stamp = time.strptime(self.cTimeStamp.GetValue(),"%H:%M:%S %d/%m/%Y")
+        try:
+            time_stamp = time.strptime(self.cTimeStamp.GetValue(),"%H:%M:%S %d/%m/%Y")
+        except ValueError:    
+            time_stamp = time.localtime()
         time_stamp_aux = (time_stamp.tm_year,
                           time_stamp.tm_mon,
                           time_stamp.tm_mday,
@@ -144,10 +194,17 @@ class CDialogMark(xrcCMarkDlg):
                           time_stamp.tm_wday,
                           time_stamp.tm_yday,
                           time_stamp.tm_isdst)
-        self.cTimeStamp.SetValue(time.strftime("%H:%M:%S %d/%m/%Y",time_stamp_aux))
+        try:
+            new_time_stamp = time.strftime("%H:%M:%S %d/%m/%Y",time_stamp_aux)
+            self.cTimeStamp.SetValue(new_time_stamp)
+        except ValueError:    
+            self.cTimeStamp.SetValue(time_stamp)
         self.wxTimeSliderHour.SetValue(evt.GetPosition())
     def OnSpin_SpinMin(self, evt):
-        time_stamp = time.strptime(self.cTimeStamp.GetValue(),"%H:%M:%S %d/%m/%Y")
+        try:
+            time_stamp = time.strptime(self.cTimeStamp.GetValue(),"%H:%M:%S %d/%m/%Y")
+        except ValueError:    
+            time_stamp = time.localtime()
         time_stamp_aux = (time_stamp.tm_year,
                           time_stamp.tm_mon,
                           time_stamp.tm_mday,
@@ -157,10 +214,17 @@ class CDialogMark(xrcCMarkDlg):
                           time_stamp.tm_wday,
                           time_stamp.tm_yday,
                           time_stamp.tm_isdst)
-        self.cTimeStamp.SetValue(time.strftime("%H:%M:%S %d/%m/%Y",time_stamp_aux))
+        try:
+            new_time_stamp = time.strftime("%H:%M:%S %d/%m/%Y",time_stamp_aux)
+            self.cTimeStamp.SetValue(new_time_stamp)
+        except ValueError:    
+            self.cTimeStamp.SetValue(time_stamp)
         self.wxTimeSlider.SetValue(evt.GetPosition())
     def OnSpin_SpinSec(self, evt):
-        time_stamp = time.strptime(self.cTimeStamp.GetValue(),"%H:%M:%S %d/%m/%Y")
+        try:
+            time_stamp = time.strptime(self.cTimeStamp.GetValue(),"%H:%M:%S %d/%m/%Y")
+        except ValueError:    
+            time_stamp = time.localtime()
         time_stamp_aux = (time_stamp.tm_year,
                           time_stamp.tm_mon,
                           time_stamp.tm_mday,
@@ -170,10 +234,17 @@ class CDialogMark(xrcCMarkDlg):
                           time_stamp.tm_wday,
                           time_stamp.tm_yday,
                           time_stamp.tm_isdst)
-        self.cTimeStamp.SetValue(time.strftime("%H:%M:%S %d/%m/%Y",time_stamp_aux))      
+        try:
+            new_time_stamp = time.strftime("%H:%M:%S %d/%m/%Y",time_stamp_aux)
+            self.cTimeStamp.SetValue(new_time_stamp)
+        except ValueError:    
+            self.cTimeStamp.SetValue(time_stamp)
         self.wxTimeSliderSec.SetValue(evt.GetPosition())      
     def OnSpin_SpinDay(self, evt):
-        time_stamp = time.strptime(self.cTimeStamp.GetValue(),"%H:%M:%S %d/%m/%Y")
+        try:
+            time_stamp = time.strptime(self.cTimeStamp.GetValue(),"%H:%M:%S %d/%m/%Y")
+        except ValueError:    
+            time_stamp = time.localtime()
         time_stamp_aux = (time_stamp.tm_year,
                           time_stamp.tm_mon,
                           evt.GetPosition(),
@@ -183,10 +254,17 @@ class CDialogMark(xrcCMarkDlg):
                           time_stamp.tm_wday,
                           time_stamp.tm_yday,
                           time_stamp.tm_isdst)
-        self.cTimeStamp.SetValue(time.strftime("%H:%M:%S %d/%m/%Y",time_stamp_aux))
+        try:
+            new_time_stamp = time.strftime("%H:%M:%S %d/%m/%Y",time_stamp_aux)
+            self.cTimeStamp.SetValue(new_time_stamp)
+        except ValueError:    
+            self.cTimeStamp.SetValue(time_stamp)
         self.wxTimeSliderDay.SetValue(evt.GetPosition())        
     def OnSpin_SpinMonth(self, evt):
-        time_stamp = time.strptime(self.cTimeStamp.GetValue(),"%H:%M:%S %d/%m/%Y")
+        try:
+            time_stamp = time.strptime(self.cTimeStamp.GetValue(),"%H:%M:%S %d/%m/%Y")
+        except ValueError:    
+            time_stamp = time.localtime()
         time_stamp_aux = (time_stamp.tm_year,
                           evt.GetPosition(),
                           time_stamp.tm_mday,
@@ -196,10 +274,17 @@ class CDialogMark(xrcCMarkDlg):
                           time_stamp.tm_wday,
                           time_stamp.tm_yday,
                           time_stamp.tm_isdst)
-        self.cTimeStamp.SetValue(time.strftime("%H:%M:%S %d/%m/%Y",time_stamp_aux))
+        try:
+            new_time_stamp = time.strftime("%H:%M:%S %d/%m/%Y",time_stamp_aux)
+            self.cTimeStamp.SetValue(new_time_stamp)
+        except ValueError:    
+            self.cTimeStamp.SetValue(time_stamp)
         self.wxTimeSliderMonth.SetValue(evt.GetPosition())        
     def OnSpin_SpinYear(self, evt):
-        time_stamp = time.strptime(self.cTimeStamp.GetValue(),"%H:%M:%S %d/%m/%Y")
+        try:
+            time_stamp = time.strptime(self.cTimeStamp.GetValue(),"%H:%M:%S %d/%m/%Y")
+        except ValueError:    
+            time_stamp = time.localtime()
         time_stamp_aux = (evt.GetPosition(),
                           time_stamp.tm_mon,
                           time_stamp.tm_mday,
@@ -209,7 +294,11 @@ class CDialogMark(xrcCMarkDlg):
                           time_stamp.tm_wday,
                           time_stamp.tm_yday,
                           time_stamp.tm_isdst)
-        self.cTimeStamp.SetValue(time.strftime("%H:%M:%S %d/%m/%Y",time_stamp_aux))
+        try:
+            new_time_stamp = time.strftime("%H:%M:%S %d/%m/%Y",time_stamp_aux)
+            self.cTimeStamp.SetValue(new_time_stamp)
+        except ValueError:    
+            self.cTimeStamp.SetValue(time_stamp)
         self.wxTimeSliderYear.SetValue(evt.GetPosition())
 
                        
