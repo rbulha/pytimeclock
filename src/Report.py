@@ -13,6 +13,8 @@ from datetime import datetime
 from GUI_xrc import xrcCReportFrame
 from OneDayReport import COneDayReport
 
+from RPConfig import CRPConfig as CONFIG
+
 class CReportVirtualList(wx.ListCtrl):
     def __init__(self, parent, PontoDB):
         wx.ListCtrl.__init__(
@@ -68,9 +70,14 @@ class CReportVirtualList(wx.ListCtrl):
         #self.attr_negative.SetBackgroundColour("orchid")
         self.attr_negative.SetBackgroundColour(wx.Colour(250,150,150,50))
 
+        self.attr_weekend = wx.ListItemAttr()
+        self.attr_weekend.SetBackgroundColour(wx.Colour(240,240,240,50))
+        self.attr_weekend.SetTextColour(wx.Colour(200,200,200,50))
+
         self.attr_dayoff = wx.ListItemAttr()
-        self.attr_dayoff.SetBackgroundColour(wx.Colour(240,240,240,50))
-        self.attr_dayoff.SetTextColour(wx.Colour(200,200,200,50))
+        self.attr_dayoff.SetBackgroundColour(wx.Colour(255,255,255,50))
+        #self.attr_dayoff.SetTextColour(wx.Colour(200,200,200,50))
+
 
         self.Bind(wx.EVT_LIST_ITEM_ACTIVATED, self.OnItemActivated)
         
@@ -109,7 +116,10 @@ class CReportVirtualList(wx.ListCtrl):
             elif col == self.COLUMN_NAME['CH']:
                 return str(self.Report_date_list[item]['CH'])
             elif col == self.COLUMN_NAME['CHREF']:
-                return str(self.week_day_ch[self.Report_date_list[item]['DATE'].weekday()])
+                if self.Report_date_list[item]['DAYOFF']:
+                    return str(timedelta(0))
+                else:
+                    return str(self.week_day_ch[self.Report_date_list[item]['DATE'].weekday()])
             elif col == self.COLUMN_NAME['HE']: #->HE
                 return str(self.Report_date_list[item]['HE'])
             elif col == self.COLUMN_NAME['CP']: #->CP
@@ -131,12 +141,14 @@ class CReportVirtualList(wx.ListCtrl):
 
     def OnGetItemAttr(self, item):
         if len(self.Report_date_list) > 0:
-            if self.Report_date_list[item]['HE'] > self.Report_date_list[item]['CP']:
+            if self.Report_date_list[item]['DAYOFF']:
+                return self.attr_dayoff
+            elif self.Report_date_list[item]['HE'] > self.Report_date_list[item]['CP']:
                 return self.attr_positive
             elif self.Report_date_list[item]['CP'] > self.Report_date_list[item]['HE']:
                 return self.attr_negative
             elif self.week_day_ch[self.Report_date_list[item]['DATE'].weekday()] == timedelta(0):
-                return self.attr_dayoff
+                return self.attr_weekend
             else:
                 return None
         else:
@@ -158,8 +170,25 @@ class CReportVirtualList(wx.ListCtrl):
             ch_sum = ch_sum + report_item['CH']
         return ch_sum    
     def ApplyRange(self,start_date,end_date):
-        start_date_struct = time.strptime(start_date,"%d/%m/%Y")
-        end_date_struct = time.strptime(end_date,"%d/%m/%Y")
+        try:
+            start_date_struct = time.strptime(start_date,"%d/%m/%Y")
+        except ValueError:
+            start_date_struct = None
+        try:
+            end_date_struct = time.strptime(end_date,"%d/%m/%Y")
+        except ValueError:
+            end_date_struct = None
+            
+        if (start_date_struct == None) or (end_date_struct == None):
+            dlg = wx.MessageDialog(self, 'Invalid start or end date',
+                                   'Time clock',
+                                   #wx.YES_NO | wx.ICON_QUESTION
+                                   #wx.YES_NO | wx.NO_DEFAULT | wx.CANCEL | wx.ICON_INFORMATION
+                                   wx.OK | wx.ICON_INFORMATION
+                                   )
+            dlg.ShowModal()
+            dlg.Destroy()                
+                        
         cStart_date = date(start_date_struct.tm_year,start_date_struct.tm_mon,start_date_struct.tm_mday)
         cEnd_date = date(end_date_struct.tm_year,end_date_struct.tm_mon,end_date_struct.tm_mday)
         if cEnd_date > cStart_date:
@@ -172,10 +201,14 @@ class CReportVirtualList(wx.ListCtrl):
                 inter_date = cStart_date + timedelta(days=iday)
                 report_entry = {}
                 report_entry['DATE'] = inter_date
+                report_entry['DAYOFF'] = False
                 day_marks = self.cPontDB.GetDate(inter_date.strftime("%d/%m/%Y"))
                 time_mark_list = []
                 for mark in day_marks: 
-                    time_mark_list.append(datetime(inter_date.year,inter_date.month,inter_date.day,mark[0],mark[1],mark[2]))
+                    if mark[3] != 0x30:
+                        time_mark_list.append(datetime(inter_date.year,inter_date.month,inter_date.day,mark[0],mark[1],mark[2]))
+                    else: #day off mark
+                        report_entry['DAYOFF'] = True    
                 time_mark_list.sort()
                 
                 self.marks_len_list.append(len(time_mark_list))
@@ -199,15 +232,21 @@ class CReportVirtualList(wx.ListCtrl):
                 report_entry['CH'] = delta_time
                 #print delta_time 
                 #->HE
-                if delta_time > self.week_day_ch[inter_date.weekday()]:
-                    report_entry['HE'] = delta_time - self.week_day_ch[inter_date.weekday()]
-                else:    
-                    report_entry['HE'] = timedelta(0)
+                if report_entry['DAYOFF']:
+                    report_entry['HE'] = delta_time
+                else:                                
+                    if delta_time > self.week_day_ch[inter_date.weekday()]:
+                        report_entry['HE'] = delta_time - self.week_day_ch[inter_date.weekday()]
+                    else:    
+                        report_entry['HE'] = timedelta(0)
                 #->CP
-                if delta_time < self.week_day_ch[inter_date.weekday()]:
-                    report_entry['CP'] = self.week_day_ch[inter_date.weekday()] - delta_time
-                else:    
+                if report_entry['DAYOFF']:
                     report_entry['CP'] = timedelta(0)
+                else:    
+                    if delta_time < self.week_day_ch[inter_date.weekday()]:
+                        report_entry['CP'] = self.week_day_ch[inter_date.weekday()] - delta_time
+                    else:    
+                        report_entry['CP'] = timedelta(0)
                 
                 self.Report_date_list.append(report_entry) 
                 #print 'outra data'
@@ -269,7 +308,7 @@ class CReport(xrcCReportFrame):
         
         self.CStopTimeText.SetValue(start_time.strftime("%d/%m/%Y"))
         
-        while(start_time.strftime("%d") != '21'):
+        while(start_time.strftime("%d") != str(CONFIG.START_REPORT_DAY)):
             start_time = start_time - delta_time 
         
         self.CStartTimeText.SetValue(start_time.strftime("%d/%m/%Y"))
@@ -297,10 +336,13 @@ class CReport(xrcCReportFrame):
         #BH_datetime = datetime.strptime(self.cBHTotalText.GetValue(),"%H:%M:%S")
         #BH_delta    = timedelta(hours=BH_date_struct.tm_hour,minutes=BH_date_struct.tm_min,seconds=BH_date_struct.tm_sec)
         try:
-            print '[CReport][OnButton_cSaldoButton] raw: ',float(self.cBHTotalText.GetValue())
-            print '[CReport][OnButton_cSaldoButton] raw sec: ',((float(self.cBHTotalText.GetValue()))*3600)
-            BH_delta    = timedelta(seconds=int((float(self.cBHTotalText.GetValue()))*3600))
-            print '[CReport][OnButton_cSaldoButton] delta: ',BH_delta
+            if len(self.cBHTotalText.GetValue()) > 0:
+                print '[CReport][OnButton_cSaldoButton] raw: ',self.cBHTotalText.GetValue()
+                print '[CReport][OnButton_cSaldoButton] raw sec: ',((float(self.cBHTotalText.GetValue()))*3600)
+                BH_delta    = timedelta(seconds=int((float(self.cBHTotalText.GetValue()))*3600))
+                print '[CReport][OnButton_cSaldoButton] delta: ',BH_delta
+            else:
+                BH_delta    = timedelta(0)
         except:
             raise
             BH_delta    = timedelta(0)
