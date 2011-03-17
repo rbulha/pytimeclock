@@ -217,8 +217,9 @@ class CColoredGauge(wx.Panel):
                     Xoffset_g = self.Xoffset+(hora*self.XbarDist)+(item[1]*(self.XbarDist/60))
                     Xoffset_icon = Xoffset_g - self.IconCenterOff
                     #dc.DrawIcon(wx.Icon(TNI.ICON[tipo][sub], wx.BITMAP_TYPE_ICO), Xoffset_icon,self.CenterY-40)
-                    timestamp = "%d:%d:%d"%(item[0],item[1],item[2])
-                    self.BookMarkCollection.append(CBookMark(self, wx.ID_ANY, (Xoffset_icon,self.Yoffset+self.CenterY-32), tipo, sub, item[4],timestamp))
+                    timestamp = "%02d:%02d:%02d"%(item[0],item[1],item[2])
+                    texto_mark = '\n'+item[4] #str(item[3])+'\n'+item[4]
+                    self.BookMarkCollection.append(CBookMark(self, wx.ID_ANY, (Xoffset_icon,self.Yoffset+self.CenterY-32), tipo, sub, texto_mark, timestamp))
                     
     def AddDefaultMarks(self):
         nowtime = time.localtime()
