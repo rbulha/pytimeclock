@@ -325,7 +325,31 @@ class xrcCOneDayReport(wx.Frame):
         self.cCHTotalText = xrc.XRCCTRL(self, "cCHTotalText")
         self.cHETotalText = xrc.XRCCTRL(self, "cHETotalText")
         self.cCPTotalText = xrc.XRCCTRL(self, "cCPTotalText")
+        self.wxOneDayMarkButton = xrc.XRCCTRL(self, "wxOneDayMarkButton")
+        self.wxDeleteMarkButton = xrc.XRCCTRL(self, "wxDeleteMarkButton")
+        self.wxCheckDayOff = xrc.XRCCTRL(self, "wxCheckDayOff")
 
+        self.Bind(wx.EVT_BUTTON, self.OnButton_wxOneDayMarkButton, self.wxOneDayMarkButton)
+        self.Bind(wx.EVT_BUTTON, self.OnButton_wxDeleteMarkButton, self.wxDeleteMarkButton)
+        self.Bind(wx.EVT_CHECKBOX, self.OnCheckbox_wxCheckDayOff, self.wxCheckDayOff)
+
+#!XRCED:begin-block:xrcCOneDayReport.OnButton_wxOneDayMarkButton
+    def OnButton_wxOneDayMarkButton(self, evt):
+        # Replace with event handler code
+        print "OnButton_wxOneDayMarkButton()"
+#!XRCED:end-block:xrcCOneDayReport.OnButton_wxOneDayMarkButton        
+
+#!XRCED:begin-block:xrcCOneDayReport.OnButton_wxDeleteMarkButton
+    def OnButton_wxDeleteMarkButton(self, evt):
+        # Replace with event handler code
+        print "OnButton_wxDeleteMarkButton()"
+#!XRCED:end-block:xrcCOneDayReport.OnButton_wxDeleteMarkButton        
+
+#!XRCED:begin-block:xrcCOneDayReport.OnCheckbox_wxCheckDayOff
+    def OnCheckbox_wxCheckDayOff(self, evt):
+        # Replace with event handler code
+        print "OnCheckbox_wxCheckDayOff()"
+#!XRCED:end-block:xrcCOneDayReport.OnCheckbox_wxCheckDayOff        
 
 
 

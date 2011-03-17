@@ -663,6 +663,46 @@
               <flag>wxALL|wxEXPAND|wxALIGN_CENTRE_VERTICAL|wxALIGN_CENTRE_HORIZONTAL</flag>
               <border>10</border>
             </object>
+            <object class="sizeritem">
+              <object class="wxBoxSizer">
+                <object class="sizeritem">
+                  <object class="wxBitmapButton" name="wxOneDayMarkButton">
+                    <bitmap>..\res\clock_flat_32.ico</bitmap>
+                    <XRCED>
+                      <events>EVT_BUTTON</events>
+                      <assign_var>1</assign_var>
+                    </XRCED>
+                  </object>
+                  <flag>wxALL</flag>
+                  <border>4</border>
+                </object>
+                <orient>wxVERTICAL</orient>
+                <object class="sizeritem">
+                  <object class="wxBitmapButton" name="wxDeleteMarkButton">
+                    <bitmap>..\res\Delete.ico</bitmap>
+                    <XRCED>
+                      <events>EVT_BUTTON</events>
+                      <assign_var>1</assign_var>
+                    </XRCED>
+                  </object>
+                  <flag>wxALL</flag>
+                  <border>4</border>
+                </object>
+                <object class="sizeritem">
+                  <object class="wxCheckBox" name="wxCheckDayOff">
+                    <label>Day off</label>
+                    <XRCED>
+                      <events>EVT_CHECKBOX</events>
+                      <assign_var>1</assign_var>
+                    </XRCED>
+                  </object>
+                  <flag>wxALL</flag>
+                  <border>4</border>
+                </object>
+              </object>
+              <flag>wxALL|wxEXPAND</flag>
+              <border>10</border>
+            </object>
           </object>
           <XRCED>
             <assign_var>1</assign_var>

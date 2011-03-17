@@ -17,13 +17,13 @@ class TypeNIcons:
     ICON[ENTRADA] = {}
     ICON[ENTRADA][NORMAL]           = BASE_RES_DIR+"a_g_down.ico"  
     ICON[ENTRADA][ALMOCO]           = BASE_RES_DIR+"l_g_down.ico"             
-    ICON[ENTRADA][EXTRAORDINARIA]   = BASE_RES_DIR+"small-red-diamond.ico"
+    ICON[ENTRADA][EXTRAORDINARIA]   = BASE_RES_DIR+"s_e_down.ico" #"small-red-diamond.ico"
     ICON[ENTRADA][PADRAO]           = BASE_RES_DIR+"sunny.ico"#"Gold_1_star.ico"#"small-blue-diamond.ico"
     
     ICON[SAIDA] = {}
     ICON[SAIDA][NORMAL]         = BASE_RES_DIR+"Up1Blue.ico"
     ICON[SAIDA][ALMOCO]         = BASE_RES_DIR+"l_b_up.ico"
-    ICON[SAIDA][EXTRAORDINARIA] = BASE_RES_DIR+"small-orange-diamond.ico"
+    ICON[SAIDA][EXTRAORDINARIA] = BASE_RES_DIR+"s_e_up.ico"#"small-orange-diamond.ico"
     ICON[SAIDA][PADRAO]         = BASE_RES_DIR+"moon_1.ico"#"stop.ico"#"small-blue-diamond.ico"
     
     LUNCH  = 0x01
