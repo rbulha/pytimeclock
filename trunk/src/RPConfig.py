@@ -26,6 +26,7 @@ class CRPConfig:
         H_S_OFICIAL_SEXTA   = DB['H_S_OFICIAL_SEXTA']     
         H_S_ALMOCO          = DB['H_S_ALMOCO']
         H_E_ALMOCO          = DB['H_E_ALMOCO']
+        START_REPORT_DAY    = DB['START_REPORT_DAY']
     else:    
         H_E_OFICIAL   = 7.0
         DB['H_E_OFICIAL']=H_E_OFICIAL
@@ -44,6 +45,8 @@ class CRPConfig:
         DB['C_H_NORMAL']=C_H_NORMAL
         C_H_SEXTA     = (H_S_OFICIAL_SEXTA - H_E_OFICIAL) - T_ALMOCO#7.6
         DB['C_H_SEXTA']=C_H_SEXTA
+        START_REPORT_DAY      = 21
+        DB['START_REPORT_DAY']=START_REPORT_DAY
         DB.sync() 
            
     @staticmethod  
