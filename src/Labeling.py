@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 class CLabeling:
-    VERSION   = "1.0.1.0"
+    VERSION   = "1.0.2.0"
     COPYRIGHT = "GNU GENERAL PUBLIC LICENSE Version 3, 29 June 2007"
     COMPANY_NAME        = 'ESD-TALK'
     COMPANY_WEBSITE     = "http://www.esd-talk.com"

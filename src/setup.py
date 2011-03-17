@@ -94,7 +94,10 @@ resourcefiles = ('res',
                     '../res/time_left.ico',
                     '../res/Help_32.png',
                     '../res/Refresh_24.png',
-                    '../res/W95MBX03.ICO'
+                    '../res/W95MBX03.ICO',
+                    '../res/s_e_down.ico',
+                    '../res/s_e_up.ico',
+                    '../res/Delete.ico'
                   ]
                 )
  
