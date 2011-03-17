@@ -1,15 +1,21 @@
 # -*- coding: UTF-8 -*-
 import wx
+import sys
+import os
+import __builtin__
 
-from GUI_xrc import xrcCRelogioFrame
-
-from DialogMark import CDialogMark
+from GUI_xrc            import xrcCRelogioFrame
+from DialogMark         import CDialogMark
 from PontoDB            import CPontoDB
 from BookMark           import CColoredGauge
 from Milestones         import CMilestonePanel
 from Report             import CReport
 from Labeling           import CLabeling as LABELING
 from wx.lib.wordwrap    import wordwrap
+
+__builtin__.__dict__['HOMEPATH'] = os.path.abspath(os.path.dirname(sys.argv[0]))
+#sys.stderr = open(os.path.join(os.path.dirname(HOMEPATH),'log\\stderr.log'), 'w')
+#sys.stdout = open(os.path.join(os.path.dirname(HOMEPATH),'log\\out.log'), 'w')
 
 class CTrayBar(wx.TaskBarIcon):
     def __init__(self, parent):
@@ -96,7 +102,7 @@ class CCRelogioFrame(xrcCRelogioFrame):
         #load data base
         self.cPontoDB = CPontoDB()
         self.cPontoDB.LoadDB()
-        self.cPontoDB.Print()
+        #self.cPontoDB.Print()
         
         #self.ColoredGauge = CColoredGauge(self.GaugePanel, self.OnGaugeGetToday)
         self.ColoredGauge = CColoredGauge(self, self.OnGaugeGetToday)
@@ -123,8 +129,9 @@ class CCRelogioFrame(xrcCRelogioFrame):
         
     def OnUserClose(self, event):
         if not event.CanVeto():
-            print '[CCRelogioFrame.OnUserIconize] - Destroy'
-            self.Destroy()
+            print '[CCRelogioFrame.OnUserIconize] - Destroy: ',self.Destroy()
+            #event.Skip()
+            #self.Close(True)
             wx.GetApp().ExitMainLoop()
         else:    
             print '[CCRelogioFrame.OnUserIconize] - Iconize'
@@ -162,21 +169,22 @@ class CCRelogioFrame(xrcCRelogioFrame):
                     print '[OnButton_AddMarkBtn] replace mark: ',mark
                     self.cPontoDB.DeleteMark(old_mark)
                     self.cPontoDB.TimeMark(mark[3],mark[2],mark[0],mark[1])
-                    self.cPontoDB.Print()  
+                    #self.cPontoDB.Print()  
                     self.ColoredGauge.RefreshMark()  
                     self.MilestonePanel.RefreshMark()                  
                 dlg.Destroy()                
             else:    
                 print '[OnButton_AddMarkBtn] mark: ',mark
                 self.cPontoDB.TimeMark(mark[3],mark[2],mark[0],mark[1])
-                self.cPontoDB.Print()  
+                #self.cPontoDB.Print()  
                 self.ColoredGauge.RefreshMark() 
                 self.MilestonePanel.RefreshMark()   
                 
     def OnButton_ExitBtn(self, evt):               
         print '[CCRelogioFrame.OnButton_ExitBtn] - Destroy'
-        self.Destroy()
-        wx.GetApp().ExitMainLoop()
+        #self.Destroy()
+        #wx.GetApp().ExitMainLoop()
+        self.Close(True)
     def OnButton_CReportButton(self, evt):
         self.cReportFrame = CReport(None,self.cPontoDB)
         self.cReportFrame.Show(True)
@@ -203,6 +211,11 @@ class CCRelogioFrame(xrcCRelogioFrame):
 class CRelogioApp(wx.App):
     def __init__(self):
         wx.App.__init__(self, redirect=False)   
+        self.Bind(wx.EVT_QUERY_END_SESSION, self.OnSystemClose)
+        self.Bind(wx.EVT_END_SESSION, self.OnSystemClose)
+    def OnSystemClose(self,event):
+        print '[CRelogioApp.OnSystemClose] Bye '   
+        self.ExitMainLoop()    
     def OnInit(self):
         self.SetExitOnFrameDelete(True)
         self.RelogioFrame = CCRelogioFrame(None)
