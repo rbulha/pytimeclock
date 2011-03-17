@@ -24,6 +24,8 @@ class CReportVirtualList(wx.ListCtrl):
         self.cPontoDB = PontoDB
         self.target_date = target_date
         
+        self.currentItem = None
+        
         self.week_day = ['MON','TUE','WED','THU','FRI','SAT','SUN']
         
         self.ch_week_1 = timedelta(hours=9,minutes=06)
@@ -32,6 +34,7 @@ class CReportVirtualList(wx.ListCtrl):
         self.week_day_ch = [self.ch_week_1,self.ch_week_1,self.ch_week_1,self.ch_week_1,self.ch_week_2,timedelta(0),timedelta(0)]
 
         self.cSubType = {}
+        self.cSubType[0x00] = 'NONE'
         self.cSubType[0x01] = 'NORMAL'
         self.cSubType[0x02] = 'ALMOCO'
         self.cSubType[0x03] = 'EXTRAORDINARIA'
@@ -39,6 +42,8 @@ class CReportVirtualList(wx.ListCtrl):
         self.cTypes = {}
         self.cTypes[0x10]   = 'ENTRADA'
         self.cTypes[0x20]   = 'SAIDA'
+        self.cTypes[0x30]   = 'DAYOFF'
+        
         
         self.COLUMN_NAME = {}
         self.COLUMN_NAME['TIME']    = 0
@@ -52,6 +57,7 @@ class CReportVirtualList(wx.ListCtrl):
         self.Report_mark_list = []
         
         self.report_one_day_statistic = {}
+        self.report_one_day_statistic['DAYOFF'] = False
 
         self.SetItemCount(len(self.Report_mark_list))
         
@@ -68,6 +74,7 @@ class CReportVirtualList(wx.ListCtrl):
         self.attr_dayoff.SetTextColour(wx.Colour(200,200,200,50))
 
         self.Bind(wx.EVT_LIST_ITEM_ACTIVATED, self.OnItemActivated)
+        self.Bind(wx.EVT_LIST_ITEM_SELECTED, self.OnItemSelected)
         
         '''
         self.attr1 = wx.ListItemAttr()
@@ -78,6 +85,35 @@ class CReportVirtualList(wx.ListCtrl):
         self.Bind(wx.EVT_LIST_ITEM_SELECTED, self.OnItemSelected)
         self.Bind(wx.EVT_LIST_ITEM_DESELECTED, self.OnItemDeselected)
         '''
+    def GetSelectedItem(self): 
+        if self.currentItem != None:
+            return self.Report_mark_list[self.currentItem]
+        else:
+            return None  
+          
+    def DeleteSelectedItem(self):       
+        if self.currentItem != None:
+            target_date = self.Report_mark_list[self.currentItem]['TIME'].timetuple()
+            print '[DeleteSelectedItem] - target_date: ',target_date
+            old_mark = self.cPontoDB.has_mark_anywhere(target_date,
+                                                       self.Report_mark_list[self.currentItem]['COMMENT'],
+                                                       self.cTypes[self.Report_mark_list[self.currentItem]['MARK']&0xF0],
+                                                       self.cSubType[self.Report_mark_list[self.currentItem]['MARK']&0x0F])
+            if old_mark != None:
+                dlg = wx.MessageDialog(self, time.strftime("%d/%m/%Y - %H:%M:%S",old_mark['time']) + '\n%s-%s'%(self.cTypes[old_mark['tipo']&0xF0],self.cSubType[old_mark['tipo']&0x0F]),
+                                       'Do you want to delete this mark?',
+                                       wx.YES_NO | wx.ICON_QUESTION
+                                       #wx.YES_NO | wx.NO_DEFAULT | wx.CANCEL | wx.ICON_INFORMATION
+                                       )
+                if( dlg.ShowModal() == wx.ID_YES):
+                    print '[DeleteSelectedItem] delete mark: ',old_mark
+                    self.cPontoDB.DeleteMark(old_mark)
+                    self.ApplyRange(self.target_date)
+                dlg.Destroy()
+                            
+    def OnItemSelected(self,event):
+        self.currentItem = event.m_itemIndex
+        print "OnItemSelected: %s\nTopItem: %s\n" %(self.GetItemText(self.currentItem), self.GetTopItem())
     def OnItemActivated(self,event):
         self.currentItem = event.m_itemIndex
         print "OnItemActivated: %s\nTopItem: %s\n" %(self.GetItemText(self.currentItem), self.GetTopItem())
@@ -110,7 +146,7 @@ class CReportVirtualList(wx.ListCtrl):
                     print '[OnButton_AddMarkBtn] replace mark: ',old_mark
                     self.cPontoDB.DeleteMark(old_mark)
                     self.cPontoDB.TimeMark(mark[3],mark[2],mark[0],mark[1])
-                    self.cPontoDB.Print()  
+                    #self.cPontoDB.Print()  
                     self.ApplyRange(self.target_date)
                     #self.ColoredGauge.RefreshMark()  
                     #self.MilestonePanel.RefreshMark()                  
@@ -149,7 +185,7 @@ class CReportVirtualList(wx.ListCtrl):
                 return None
         else:
             return None
-
+    
     def ApplyRange(self,today_date):
         del self.Report_mark_list
         self.Report_mark_list = []
@@ -157,13 +193,17 @@ class CReportVirtualList(wx.ListCtrl):
         self.marks_len_list = []
         day_marks = self.cPontoDB.GetDate(today_date.strftime("%d/%m/%Y"))
         time_mark_list = []
+        self.report_one_day_statistic['DAYOFF'] = False
         for mark in day_marks: 
             time_mark_list.append(datetime(today_date.year,today_date.month,today_date.day,mark[0],mark[1],mark[2]))
             report_entry = {}
             report_entry['TIME'] = datetime(today_date.year,today_date.month,today_date.day,mark[0],mark[1],mark[2])
             report_entry['MARK'] = mark[3]
             report_entry['COMMENT'] = mark[4]
-            self.Report_mark_list.append(report_entry)
+            if mark[3] == 0x30:
+                self.report_one_day_statistic['DAYOFF'] = True
+            else:
+                self.Report_mark_list.append(report_entry)
         time_mark_list.sort()
         
         def sort_key(entry):
@@ -194,16 +234,21 @@ class CReportVirtualList(wx.ListCtrl):
         else:    
             self.report_one_day_statistic['HE'] = timedelta(0)
         #->CP
-        if delta_time < self.week_day_ch[today_date.weekday()]:
-            self.report_one_day_statistic['CP'] = self.week_day_ch[today_date.weekday()] - delta_time
-        else:    
+        if self.report_one_day_statistic['DAYOFF']:
             self.report_one_day_statistic['CP'] = timedelta(0)
+        else:
+            if delta_time < self.week_day_ch[today_date.weekday()]:
+                self.report_one_day_statistic['CP'] = self.week_day_ch[today_date.weekday()] - delta_time
+            else:    
+                self.report_one_day_statistic['CP'] = timedelta(0)
         
         self.SetItemCount(len(self.Report_mark_list))
         #for mark_column in self.COLUMN_NAME['MARK']:
         self.SetColumnWidth(self.COLUMN_NAME['TIME'], 100)
         self.SetColumnWidth(self.COLUMN_NAME['MARK'], 160)
         self.SetColumnWidth(self.COLUMN_NAME['COMMENT'], 200)
+    def GetDayOff(self):
+        return self.report_one_day_statistic['DAYOFF']
         
 
 class COneDayReport(xrcCOneDayReport):
@@ -224,8 +269,12 @@ class COneDayReport(xrcCOneDayReport):
         
         sizer = wx.BoxSizer(wx.VERTICAL)
         
+        self.target_date = target_date
+        
         self.cReportVirtual = CReportVirtualList(self.CReportListCtrl, PontoDB, target_date)
         self.cReportVirtual.ApplyRange(target_date)
+        
+        self.wxCheckDayOff.SetValue(self.cReportVirtual.GetDayOff())
         
         self.wxTitleText.SetValue(target_date.strftime(" Reporting date: %d/%m/%Y"))
         
@@ -237,4 +286,29 @@ class COneDayReport(xrcCOneDayReport):
         self.CReportListCtrl.SetSizer(sizer)
         self.CReportListCtrl.SetAutoLayout(True)  
         self.SetSize((510,280))
-        
+
+    def OnCheckbox_wxCheckDayOff(self, evt):
+        print '[COneDayReport.OnCheckbox_wxCheckDayOff]',self.wxCheckDayOff.IsChecked()
+        if self.wxCheckDayOff.IsChecked():
+            self.cPontoDB.TimeMark(self.target_date.timetuple(),'DAY OFF','DAYOFF','NONE')
+            self.cReportVirtual.ApplyRange(self.target_date)
+        else:
+            old_mark = self.cPontoDB.has_mark_anywhere(self.target_date.timetuple(),
+                                                       'DAY OFF',
+                                                       'DAYOFF',
+                                                       'NONE')
+            if old_mark != None:
+                print '[COneDayReport.OnCheckbox_wxCheckDayOff] -  delete mark: ',old_mark
+                self.cPontoDB.DeleteMark(old_mark)            
+
+    def OnButton_wxOneDayMarkButton(self, evt):
+        dialog = CDialogMark(self,self.target_date.timetuple())
+        returncode = dialog.ShowModal()
+        print '[COneDayReport.OnButton_wxOneDayMarkButton] - return: ',returncode
+        if returncode >= 0:
+            mark = dialog.GetMark()
+            self.cPontoDB.TimeMark(mark[3],mark[2],mark[0],mark[1])
+            self.cReportVirtual.ApplyRange(self.target_date)
+            
+    def OnButton_wxDeleteMarkButton(self, evt):
+        self.cReportVirtual.DeleteSelectedItem()
