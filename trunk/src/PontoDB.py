@@ -18,6 +18,7 @@ class CPontoDB:
         print '[CPontoDB.__init__] base path: ',os.path.dirname(base)
         
         self.cSubType = {}
+        self.cSubType['NONE']           = 0x00
         self.cSubType['NORMAL']         = 0x01
         self.cSubType['ALMOCO']         = 0x02
         self.cSubType['EXTRAORDINARIA'] = 0x03
@@ -25,6 +26,7 @@ class CPontoDB:
         self.cTypes = {}
         self.cTypes['ENTRADA']          = 0x10
         self.cTypes['SAIDA']            = 0x20
+        self.cTypes['DAYOFF']           = 0x30
           
     def LoadDB(self):
         caminho = self.DB_BASE_PATH + 'meu-ponto.dat'
