@@ -1,0 +1,717 @@
+<?xml version="1.0" ?>
+<resource>
+  <object class="wxFrame" name="CRelogioFrame">
+    <object class="wxBoxSizer">
+      <object class="sizeritem">
+        <object class="wxPanel" name="ControlPanel">
+          <object class="wxStaticBoxSizer">
+            <object class="sizeritem">
+              <object class="wxBitmapButton" name="AddMarkBtn">
+                <bitmap>..\res\clock_flat_32.ico</bitmap>
+                <tooltip>Add a temporal mark</tooltip>
+                <XRCED>
+                  <events>EVT_BUTTON</events>
+                  <assign_var>1</assign_var>
+                </XRCED>
+              </object>
+            </object>
+            <object class="sizeritem">
+              <object class="wxBitmapButton" name="CReportButton">
+                <bitmap>..\res\report_32.png</bitmap>
+                <tooltip>Open report</tooltip>
+                <XRCED>
+                  <events>EVT_BUTTON</events>
+                  <assign_var>1</assign_var>
+                </XRCED>
+              </object>
+            </object>
+            <object class="spacer">
+              <size>15,-1</size>
+            </object>
+            <object class="sizeritem">
+              <object class="wxBitmapButton" name="ExitBtn">
+                <bitmap>..\res\saida.png</bitmap>
+                <tooltip>Exit</tooltip>
+                <XRCED>
+                  <events>EVT_BUTTON</events>
+                  <assign_var>1</assign_var>
+                </XRCED>
+              </object>
+            </object>
+            <object class="spacer">
+              <size>200,-1</size>
+            </object>
+            <object class="sizeritem">
+              <object class="wxBitmapButton" name="ClearAllMarks">
+                <size>40,40</size>
+                <bitmap>..\res\R2D2.png</bitmap>
+                <tooltip>DEBUG - ERASE DAYLONG</tooltip>
+                <hidden>1</hidden>
+                <XRCED>
+                  <events>EVT_BUTTON</events>
+                  <assign_var>1</assign_var>
+                </XRCED>
+              </object>
+              <flag>wxRIGHT|wxALIGN_RIGHT</flag>
+            </object>
+            <label>Toolbar</label>
+            <orient>wxHORIZONTAL</orient>
+            <object class="sizeritem">
+              <object class="wxBitmapButton" name="AboutButton">
+                <bitmap>..\res\Help_32.png</bitmap>
+                <XRCED>
+                  <events>EVT_BUTTON</events>
+                  <assign_var>1</assign_var>
+                </XRCED>
+              </object>
+              <flag>wxRIGHT|wxALIGN_RIGHT</flag>
+            </object>
+          </object>
+        </object>
+        <flag>wxEXPAND|wxALIGN_TOP</flag>
+      </object>
+      <orient>wxVERTICAL</orient>
+    </object>
+    <title>Relogio de ponto</title>
+    <centered>1</centered>
+    <style>wxDEFAULT_FRAME_STYLE</style>
+    <XRCED>
+      <events>EVT_MAXIMIZE</events>
+    </XRCED>
+  </object>
+  <object class="wxDialog" name="CMarkDlg">
+    <object class="wxBoxSizer">
+      <orient>wxVERTICAL</orient>
+      <object class="sizeritem">
+        <object class="wxBoxSizer">
+          <object class="sizeritem">
+            <object class="wxRadioBox" name="CRadio_Type">
+              <label>Tipo</label>
+              <dimension>1</dimension>
+              <content>
+                <item>ENTRADA</item>
+                <item>SAIDA</item>
+              </content>
+              <selection>0</selection>
+              <dimension>1</dimension>
+              <XRCED>
+                <events>EVT_RADIOBOX</events>
+                <assign_var>1</assign_var>
+              </XRCED>
+            </object>
+            <option>1</option>
+            <flag>wxALL|wxEXPAND|wxALIGN_CENTRE_VERTICAL|wxALIGN_CENTRE_HORIZONTAL</flag>
+            <border>4</border>
+          </object>
+          <object class="sizeritem">
+            <object class="wxRadioBox" name="CRadio_subType">
+              <label>SubType</label>
+              <dimension>1</dimension>
+              <content>
+                <item>NORMAL</item>
+                <item>ALMOCO</item>
+                <item>EXTRAORDINARIA</item>
+              </content>
+              <selection>0</selection>
+              <dimension>1</dimension>
+              <XRCED>
+                <events>EVT_RADIOBOX</events>
+                <assign_var>1</assign_var>
+              </XRCED>
+            </object>
+            <option>1</option>
+            <flag>wxALL|wxEXPAND|wxALIGN_CENTRE_VERTICAL|wxALIGN_CENTRE_HORIZONTAL</flag>
+            <border>4</border>
+          </object>
+          <orient>wxHORIZONTAL</orient>
+        </object>
+        <flag>wxEXPAND|wxALIGN_CENTRE_VERTICAL|wxALIGN_CENTRE_HORIZONTAL</flag>
+      </object>
+      <object class="sizeritem">
+        <object class="wxBoxSizer">
+          <object class="sizeritem">
+            <object class="wxStaticBoxSizer">
+              <object class="sizeritem">
+                <object class="wxTextCtrl" name="cTimeStamp">
+                  <XRCED>
+                    <assign_var>1</assign_var>
+                  </XRCED>
+                </object>
+                <flag>wxALL|wxEXPAND|wxALIGN_CENTRE_VERTICAL|wxALIGN_CENTRE_HORIZONTAL</flag>
+                <border>2</border>
+              </object>
+              <label>Date and time</label>
+              <orient>wxVERTICAL</orient>
+              <object class="sizeritem">
+                <object class="wxBoxSizer">
+                  <orient>wxHORIZONTAL</orient>
+                  <object class="sizeritem">
+                    <object class="wxBoxSizer">
+                      <orient>wxVERTICAL</orient>
+                      <object class="sizeritem">
+                        <object class="wxBoxSizer">
+                          <orient>wxHORIZONTAL</orient>
+                          <object class="sizeritem">
+                            <object class="wxSlider" name="wxTimeSliderHour">
+                              <value>12</value>
+                              <min>0</min>
+                              <max>23</max>
+                              <tickfreq>1</tickfreq>
+                              <pagesize>10</pagesize>
+                              <linesize>1</linesize>
+                              <XRCED>
+                                <events>EVT_SCROLL</events>
+                                <assign_var>1</assign_var>
+                              </XRCED>
+                            </object>
+                          </object>
+                          <object class="sizeritem">
+                            <object class="wxSpinButton" name="SpinHour">
+                              <min>0</min>
+                              <max>23</max>
+                              <style>wxSP_HORIZONTAL|wxSP_ARROW_KEYS</style>
+                              <XRCED>
+                                <events>EVT_SPIN</events>
+                                <assign_var>1</assign_var>
+                              </XRCED>
+                            </object>
+                          </object>
+                        </object>
+                      </object>
+                      <object class="sizeritem">
+                        <object class="wxBoxSizer">
+                          <orient>wxHORIZONTAL</orient>
+                          <object class="sizeritem">
+                            <object class="wxSlider" name="wxTimeSlider">
+                              <value>30</value>
+                              <min>0</min>
+                              <max>59</max>
+                              <tickfreq>1</tickfreq>
+                              <pagesize>10</pagesize>
+                              <linesize>1</linesize>
+                              <XRCED>
+                                <events>EVT_SCROLL</events>
+                                <assign_var>1</assign_var>
+                              </XRCED>
+                            </object>
+                          </object>
+                          <object class="sizeritem">
+                            <object class="wxSpinButton" name="SpinMin">
+                              <min>0</min>
+                              <max>59</max>
+                              <style>wxSP_HORIZONTAL|wxSP_ARROW_KEYS</style>
+                              <XRCED>
+                                <events>EVT_SPIN</events>
+                                <assign_var>1</assign_var>
+                              </XRCED>
+                            </object>
+                          </object>
+                        </object>
+                      </object>
+                      <object class="sizeritem">
+                        <object class="wxBoxSizer">
+                          <orient>wxHORIZONTAL</orient>
+                          <object class="sizeritem">
+                            <object class="wxSlider" name="wxTimeSliderSec">
+                              <value>30</value>
+                              <min>0</min>
+                              <max>59</max>
+                              <tickfreq>1</tickfreq>
+                              <pagesize>10</pagesize>
+                              <linesize>1</linesize>
+                              <XRCED>
+                                <events>EVT_SCROLL</events>
+                                <assign_var>1</assign_var>
+                              </XRCED>
+                            </object>
+                          </object>
+                          <object class="sizeritem">
+                            <object class="wxSpinButton" name="SpinSec">
+                              <min>0</min>
+                              <max>59</max>
+                              <style>wxSP_HORIZONTAL|wxSP_ARROW_KEYS</style>
+                              <XRCED>
+                                <events>EVT_SPIN</events>
+                                <assign_var>1</assign_var>
+                              </XRCED>
+                            </object>
+                          </object>
+                        </object>
+                      </object>
+                    </object>
+                  </object>
+                  <object class="sizeritem">
+                    <object class="wxBoxSizer">
+                      <orient>wxVERTICAL</orient>
+                      <object class="sizeritem">
+                        <object class="wxBoxSizer">
+                          <object class="sizeritem">
+                            <object class="wxSlider" name="wxTimeSliderDay">
+                              <value>12</value>
+                              <min>1</min>
+                              <max>31</max>
+                              <tickfreq>1</tickfreq>
+                              <pagesize>10</pagesize>
+                              <linesize>1</linesize>
+                              <XRCED>
+                                <events>EVT_SCROLL</events>
+                                <assign_var>1</assign_var>
+                              </XRCED>
+                            </object>
+                          </object>
+                          <object class="sizeritem">
+                            <object class="wxSpinButton" name="SpinDay">
+                              <min>1</min>
+                              <max>31</max>
+                              <style>wxSP_HORIZONTAL|wxSP_ARROW_KEYS</style>
+                              <XRCED>
+                                <events>EVT_SPIN</events>
+                                <assign_var>1</assign_var>
+                              </XRCED>
+                            </object>
+                          </object>
+                          <orient>wxHORIZONTAL</orient>
+                        </object>
+                      </object>
+                      <object class="sizeritem">
+                        <object class="wxBoxSizer">
+                          <orient>wxHORIZONTAL</orient>
+                          <object class="sizeritem">
+                            <object class="wxSlider" name="wxTimeSliderMonth">
+                              <value>6</value>
+                              <min>1</min>
+                              <max>12</max>
+                              <tickfreq>1</tickfreq>
+                              <pagesize>10</pagesize>
+                              <linesize>1</linesize>
+                              <XRCED>
+                                <events>EVT_SCROLL</events>
+                                <assign_var>1</assign_var>
+                              </XRCED>
+                            </object>
+                          </object>
+                          <object class="sizeritem">
+                            <object class="wxSpinButton" name="SpinMonth">
+                              <min>1</min>
+                              <max>12</max>
+                              <style>wxSP_HORIZONTAL|wxSP_ARROW_KEYS</style>
+                              <XRCED>
+                                <events>EVT_SPIN</events>
+                                <assign_var>1</assign_var>
+                              </XRCED>
+                            </object>
+                          </object>
+                        </object>
+                      </object>
+                      <object class="sizeritem">
+                        <object class="wxBoxSizer">
+                          <orient>wxHORIZONTAL</orient>
+                          <object class="sizeritem">
+                            <object class="wxSlider" name="wxTimeSliderYear">
+                              <value>6</value>
+                              <min>2000</min>
+                              <max>9999</max>
+                              <tickfreq>1</tickfreq>
+                              <pagesize>10</pagesize>
+                              <linesize>1</linesize>
+                              <XRCED>
+                                <events>EVT_SCROLL</events>
+                                <assign_var>1</assign_var>
+                              </XRCED>
+                            </object>
+                          </object>
+                          <object class="sizeritem">
+                            <object class="wxSpinButton" name="SpinYear">
+                              <min>2000</min>
+                              <max>2999</max>
+                              <style>wxSP_HORIZONTAL|wxSP_ARROW_KEYS</style>
+                              <XRCED>
+                                <events>EVT_SPIN</events>
+                                <assign_var>1</assign_var>
+                              </XRCED>
+                            </object>
+                          </object>
+                        </object>
+                      </object>
+                    </object>
+                  </object>
+                </object>
+              </object>
+            </object>
+            <flag>wxEXPAND|wxALIGN_CENTRE_VERTICAL|wxALIGN_CENTRE_HORIZONTAL</flag>
+          </object>
+          <orient>wxVERTICAL</orient>
+        </object>
+        <flag>wxEXPAND|wxALIGN_CENTRE_VERTICAL|wxALIGN_CENTRE_HORIZONTAL</flag>
+      </object>
+      <object class="sizeritem">
+        <object class="wxBoxSizer" name="CCommentTextCtrl">
+          <orient>wxVERTICAL</orient>
+          <object class="sizeritem">
+            <object class="wxStaticBoxSizer">
+              <object class="sizeritem">
+                <object class="wxTextCtrl" name="CCommentTextCtrl">
+                  <XRCED>
+                    <assign_var>1</assign_var>
+                  </XRCED>
+                </object>
+                <flag>wxEXPAND|wxALIGN_CENTRE_VERTICAL|wxALIGN_CENTRE_HORIZONTAL</flag>
+              </object>
+              <label>Comment</label>
+              <orient>wxVERTICAL</orient>
+            </object>
+            <flag>wxEXPAND|wxALIGN_CENTRE_VERTICAL|wxALIGN_CENTRE_HORIZONTAL</flag>
+          </object>
+        </object>
+        <flag>wxEXPAND|wxALIGN_CENTRE_VERTICAL|wxALIGN_CENTRE_HORIZONTAL</flag>
+      </object>
+      <object class="sizeritem">
+        <object class="wxBoxSizer">
+          <object class="sizeritem">
+            <object class="wxButton" name="CMarkBtn">
+              <label>Mark</label>
+              <XRCED>
+                <events>EVT_BUTTON</events>
+              </XRCED>
+            </object>
+            <option>1</option>
+            <flag>wxEXPAND|wxGROW|wxALIGN_CENTRE_VERTICAL|wxALIGN_CENTRE_HORIZONTAL</flag>
+          </object>
+          <object class="sizeritem">
+            <object class="wxButton" name="CCancelBtn">
+              <label>Cancel</label>
+              <XRCED>
+                <events>EVT_BUTTON</events>
+              </XRCED>
+            </object>
+            <option>1</option>
+            <flag>wxEXPAND|wxALIGN_CENTRE_VERTICAL|wxALIGN_CENTRE_HORIZONTAL</flag>
+          </object>
+          <orient>wxHORIZONTAL</orient>
+        </object>
+        <flag>wxEXPAND|wxALIGN_CENTRE_VERTICAL|wxALIGN_CENTRE_HORIZONTAL</flag>
+      </object>
+    </object>
+    <title>Mark</title>
+    <centered>1</centered>
+    <icon stock_id="wxART_TICK_MARK"/>
+    <style>wxDEFAULT_DIALOG_STYLE</style>
+    <XRCED>
+      <events>EVT_CLOSE</events>
+    </XRCED>
+  </object>
+  <object class="wxFrame" name="CReportFrame">
+    <object class="wxBoxSizer">
+      <orient>wxVERTICAL</orient>
+      <object class="sizeritem">
+        <object class="wxPanel">
+          <object class="wxBoxSizer">
+            <orient>wxVERTICAL</orient>
+            <object class="sizeritem">
+              <object class="wxBoxSizer">
+                <object class="sizeritem">
+                  <object class="wxStaticText">
+                    <label>  from date:  </label>
+                  </object>
+                </object>
+                <object class="sizeritem">
+                  <object class="wxTextCtrl" name="CStartTimeText">
+                    <value>01/01/2011</value>
+                    <XRCED>
+                      <assign_var>1</assign_var>
+                    </XRCED>
+                  </object>
+                </object>
+                <object class="sizeritem">
+                  <object class="wxStaticText">
+                    <label>  to:  </label>
+                  </object>
+                </object>
+                <object class="sizeritem">
+                  <object class="wxTextCtrl" name="CStopTimeText">
+                    <value>11/01/2011</value>
+                    <XRCED>
+                      <assign_var>1</assign_var>
+                    </XRCED>
+                  </object>
+                </object>
+                <object class="sizeritem">
+                  <object class="wxButton" name="CApplyButton">
+                    <label>APPLY</label>
+                    <XRCED>
+                      <events>EVT_BUTTON</events>
+                      <assign_var>1</assign_var>
+                    </XRCED>
+                  </object>
+                </object>
+                <orient>wxHORIZONTAL</orient>
+              </object>
+              <flag>wxALL|wxEXPAND</flag>
+              <border>3</border>
+            </object>
+            <object class="sizeritem">
+              <object class="wxPanel" name="CReportListCtrl">
+                <XRCED>
+                  <assign_var>1</assign_var>
+                </XRCED>
+              </object>
+              <option>1</option>
+              <flag>wxALL|wxEXPAND</flag>
+            </object>
+            <object class="sizeritem">
+              <object class="wxPanel" name="cReportStatisPanel">
+                <object class="wxBoxSizer">
+                  <orient>wxHORIZONTAL</orient>
+                  <object class="sizeritem">
+                    <object class="wxStaticText">
+                      <label> Horas trabalhadas: </label>
+                      <style>wxALIGN_CENTRE</style>
+                    </object>
+                    <flag>wxALIGN_CENTRE_VERTICAL|wxALIGN_CENTRE_HORIZONTAL</flag>
+                  </object>
+                  <object class="sizeritem">
+                    <object class="wxTextCtrl" name="cCHTotalText">
+                      <XRCED>
+                        <assign_var>1</assign_var>
+                      </XRCED>
+                    </object>
+                    <flag>wxALIGN_CENTRE_VERTICAL|wxALIGN_CENTRE_HORIZONTAL</flag>
+                  </object>
+                  <object class="sizeritem">
+                    <object class="wxStaticText">
+                      <label> Horas extras: </label>
+                      <style>wxALIGN_CENTRE</style>
+                    </object>
+                    <flag>wxALIGN_CENTRE_VERTICAL|wxALIGN_CENTRE_HORIZONTAL</flag>
+                  </object>
+                  <object class="sizeritem">
+                    <object class="wxTextCtrl" name="cHETotalText">
+                      <XRCED>
+                        <assign_var>1</assign_var>
+                      </XRCED>
+                    </object>
+                    <flag>wxALIGN_CENTRE_VERTICAL|wxALIGN_CENTRE_HORIZONTAL</flag>
+                  </object>
+                  <object class="sizeritem">
+                    <object class="wxStaticText">
+                      <label> Compensar:  </label>
+                      <style>wxALIGN_CENTRE</style>
+                    </object>
+                    <flag>wxALIGN_CENTRE_VERTICAL|wxALIGN_CENTRE_HORIZONTAL</flag>
+                  </object>
+                  <object class="sizeritem">
+                    <object class="wxTextCtrl" name="cCPTotalText">
+                      <XRCED>
+                        <assign_var>1</assign_var>
+                      </XRCED>
+                    </object>
+                    <flag>wxALIGN_CENTRE_VERTICAL|wxALIGN_CENTRE_HORIZONTAL</flag>
+                  </object>
+                  <object class="sizeritem">
+                    <object class="wxStaticText">
+                      <label> Banco de horas:  </label>
+                      <style>wxALIGN_CENTRE</style>
+                    </object>
+                    <flag>wxALIGN_CENTRE_VERTICAL|wxALIGN_CENTRE_HORIZONTAL</flag>
+                  </object>
+                  <object class="sizeritem">
+                    <object class="wxToggleButton" name="cBHToggleButton">
+                      <size>24,24</size>
+                      <label>+</label>
+                      <XRCED>
+                        <events>EVT_TOGGLEBUTTON</events>
+                        <assign_var>1</assign_var>
+                      </XRCED>
+                    </object>
+                  </object>
+                  <object class="sizeritem">
+                    <object class="wxTextCtrl" name="cBHTotalText">
+                      <XRCED>
+                        <assign_var>1</assign_var>
+                      </XRCED>
+                    </object>
+                    <flag>wxALIGN_CENTRE_VERTICAL|wxALIGN_CENTRE_HORIZONTAL</flag>
+                  </object>
+                  <object class="sizeritem">
+                    <object class="wxStaticText">
+                      <label>  =   Saldo: </label>
+                      <style>wxALIGN_CENTRE</style>
+                    </object>
+                    <flag>wxALIGN_CENTRE_VERTICAL|wxALIGN_CENTRE_HORIZONTAL</flag>
+                  </object>
+                  <object class="sizeritem">
+                    <object class="wxTextCtrl" name="cSaldoText">
+                      <XRCED>
+                        <assign_var>1</assign_var>
+                      </XRCED>
+                    </object>
+                    <flag>wxALIGN_CENTRE_VERTICAL|wxALIGN_CENTRE_HORIZONTAL</flag>
+                  </object>
+                  <object class="sizeritem">
+                    <object class="wxBitmapButton" name="cSaldoButton">
+                      <size>24,24</size>
+                      <bitmap>..\res\Refresh_24.png</bitmap>
+                      <XRCED>
+                        <events>EVT_BUTTON</events>
+                        <assign_var>1</assign_var>
+                      </XRCED>
+                    </object>
+                    <flag>wxALIGN_CENTRE_VERTICAL|wxALIGN_CENTRE_HORIZONTAL</flag>
+                  </object>
+                </object>
+              </object>
+              <flag>wxALL|wxEXPAND</flag>
+              <border>3</border>
+            </object>
+          </object>
+        </object>
+        <option>1</option>
+        <flag>wxALL|wxEXPAND|wxGROW</flag>
+        <border>3</border>
+      </object>
+    </object>
+    <title>Report</title>
+    <centered>1</centered>
+    <style>wxDEFAULT_FRAME_STYLE</style>
+  </object>
+  <object class="wxFrame" name="COneDayReport">
+    <object class="wxBoxSizer">
+      <orient>wxVERTICAL</orient>
+      <object class="sizeritem">
+        <object class="wxPanel" name="wxTitlePanel">
+          <object class="wxBoxSizer">
+            <orient>wxVERTICAL</orient>
+            <object class="sizeritem">
+              <object class="wxTextCtrl" name="wxTitleText">
+                <value>Data atual...</value>
+                <enabled>0</enabled>
+                <XRCED>
+                  <assign_var>1</assign_var>
+                </XRCED>
+              </object>
+              <flag>wxALL|wxEXPAND|wxALIGN_CENTRE_VERTICAL|wxALIGN_CENTRE_HORIZONTAL</flag>
+              <border>4</border>
+            </object>
+          </object>
+        </object>
+        <option>0</option>
+        <flag>wxALL|wxEXPAND|wxALIGN_CENTRE_VERTICAL|wxALIGN_CENTRE_HORIZONTAL</flag>
+      </object>
+      <object class="sizeritem">
+        <object class="wxPanel" name="CReportListCtrl">
+          <XRCED>
+            <assign_var>1</assign_var>
+          </XRCED>
+        </object>
+        <option>1</option>
+        <flag>wxALL|wxEXPAND|wxALIGN_CENTRE_VERTICAL|wxALIGN_CENTRE_HORIZONTAL</flag>
+        <minsize>450,250</minsize>
+      </object>
+      <object class="sizeritem">
+        <object class="wxPanel" name="wxStatisticPanel">
+          <object class="wxBoxSizer">
+            <orient>wxHORIZONTAL</orient>
+            <object class="sizeritem">
+              <object class="wxBoxSizer">
+                <object class="sizeritem">
+                  <object class="wxStaticText">
+                    <label> Horas trabalhadas: </label>
+                    <style>wxALIGN_CENTRE</style>
+                  </object>
+                  <flag>wxALIGN_CENTRE_VERTICAL|wxALIGN_CENTRE_HORIZONTAL</flag>
+                </object>
+                <object class="sizeritem">
+                  <object class="wxTextCtrl" name="cCHTotalText">
+                    <XRCED>
+                      <assign_var>1</assign_var>
+                    </XRCED>
+                  </object>
+                  <flag>wxALIGN_CENTRE_VERTICAL|wxALIGN_CENTRE_HORIZONTAL</flag>
+                </object>
+                <object class="sizeritem">
+                  <object class="wxStaticText">
+                    <label> Horas extras: </label>
+                    <style>wxALIGN_CENTRE</style>
+                  </object>
+                  <flag>wxALIGN_CENTRE_VERTICAL|wxALIGN_CENTRE_HORIZONTAL</flag>
+                </object>
+                <object class="sizeritem">
+                  <object class="wxTextCtrl" name="cHETotalText">
+                    <XRCED>
+                      <assign_var>1</assign_var>
+                    </XRCED>
+                  </object>
+                  <flag>wxALIGN_CENTRE_VERTICAL|wxALIGN_CENTRE_HORIZONTAL</flag>
+                </object>
+                <object class="sizeritem">
+                  <object class="wxStaticText">
+                    <label> Compensar:  </label>
+                    <style>wxALIGN_CENTRE</style>
+                  </object>
+                  <flag>wxALIGN_CENTRE_VERTICAL|wxALIGN_CENTRE_HORIZONTAL</flag>
+                </object>
+                <object class="sizeritem">
+                  <object class="wxTextCtrl" name="cCPTotalText">
+                    <XRCED>
+                      <assign_var>1</assign_var>
+                    </XRCED>
+                  </object>
+                  <flag>wxALIGN_CENTRE_VERTICAL|wxALIGN_CENTRE_HORIZONTAL</flag>
+                </object>
+                <orient>wxVERTICAL</orient>
+              </object>
+              <flag>wxALL|wxEXPAND|wxALIGN_CENTRE_VERTICAL|wxALIGN_CENTRE_HORIZONTAL</flag>
+              <border>10</border>
+            </object>
+            <object class="sizeritem">
+              <object class="wxBoxSizer">
+                <object class="sizeritem">
+                  <object class="wxBitmapButton" name="wxOneDayMarkButton">
+                    <bitmap>..\res\clock_flat_32.ico</bitmap>
+                    <XRCED>
+                      <events>EVT_BUTTON</events>
+                      <assign_var>1</assign_var>
+                    </XRCED>
+                  </object>
+                  <flag>wxALL</flag>
+                  <border>4</border>
+                </object>
+                <orient>wxVERTICAL</orient>
+                <object class="sizeritem">
+                  <object class="wxBitmapButton" name="wxDeleteMarkButton">
+                    <bitmap>..\res\Delete.ico</bitmap>
+                    <XRCED>
+                      <events>EVT_BUTTON</events>
+                      <assign_var>1</assign_var>
+                    </XRCED>
+                  </object>
+                  <flag>wxALL</flag>
+                  <border>4</border>
+                </object>
+                <object class="sizeritem">
+                  <object class="wxCheckBox" name="wxCheckDayOff">
+                    <label>Day off</label>
+                    <XRCED>
+                      <events>EVT_CHECKBOX</events>
+                      <assign_var>1</assign_var>
+                    </XRCED>
+                  </object>
+                  <flag>wxALL</flag>
+                  <border>4</border>
+                </object>
+              </object>
+              <flag>wxALL|wxEXPAND</flag>
+              <border>10</border>
+            </object>
+          </object>
+          <XRCED>
+            <assign_var>1</assign_var>
+          </XRCED>
+        </object>
+        <flag>wxALL|wxEXPAND|wxALIGN_CENTRE_VERTICAL|wxALIGN_CENTRE_HORIZONTAL</flag>
+      </object>
+    </object>
+    <title>One day report</title>
+    <centered>1</centered>
+  </object>
+</resource>
