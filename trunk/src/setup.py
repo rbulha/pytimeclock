@@ -97,6 +97,7 @@ resourcefiles = ('res',
                     '../res/W95MBX03.ICO',
                     '../res/s_e_down.ico',
                     '../res/s_e_up.ico',
+                    '../res/day_off.ico',
                     '../res/Delete.ico'
                   ]
                 )
