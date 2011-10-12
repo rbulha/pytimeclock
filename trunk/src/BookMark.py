@@ -15,6 +15,7 @@ class CBookMark(wx.Panel):
     def __init__(self, parent, i_id=wx.ID_ANY, pos=wx.DefaultPosition, mtype=0x10, subtype=0x01, name="marca", timestamp="00:00:00"):
         wx.Panel.__init__(self,parent,i_id,pos,(16,16),wx.TRANSPARENT_WINDOW ,name) #wx.TAB_TRAVERSAL
         #[mtype][subtype]
+        print 'CBookMark.__init__: mtype=%d, subtype=%d'%(mtype,subtype)
         self.icons = wx.Icon(TNI.ICON[mtype][subtype], wx.BITMAP_TYPE_ICO, desiredWidth=16, desiredHeight=16)  
         self.Position = pos    
         self.Bind(wx.EVT_PAINT, self.OnPaintBG)  
