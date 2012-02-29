@@ -27,8 +27,8 @@ class CReportVirtualList(wx.ListCtrl):
         
         self.week_day = ['MON','TUE','WED','THU','FRI','SAT','SUN']
         
-        self.ch_week_1 = timedelta(hours=9,minutes=06)
-        self.ch_week_2 = timedelta(hours=7,minutes=36)
+        self.ch_week_1 = timedelta(hours=int((CONFIG.C_H_NORMAL*60)/60),minutes=int((CONFIG.C_H_NORMAL*60)%60)) #timedelta(hours=9,minutes=06)
+        self.ch_week_2 = timedelta(hours=int((CONFIG.C_H_SEXTA*60)/60),minutes=int((CONFIG.C_H_SEXTA*60)%60)) #timedelta(hours=7,minutes=36)
         
         self.week_day_ch = [self.ch_week_1,self.ch_week_1,self.ch_week_1,self.ch_week_1,self.ch_week_2,timedelta(0),timedelta(0)]
 

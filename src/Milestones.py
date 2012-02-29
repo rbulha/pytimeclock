@@ -69,6 +69,8 @@ class CMilestonePanel(wx.Panel):
         #Size event
         self.Bind(wx.EVT_SIZE, self.OnSize) 
         
+        self.Refresh()
+        
         '''--- basic marks (dummy mark only visual)
         #teste
         Xoffset_g = 30
