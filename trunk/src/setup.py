@@ -109,7 +109,13 @@ binaries = ('bin',[ 'MSVCR71.dll',
                     'gdiplus.dll',
                     'GUI.xrc' ]) 
                     
-appdata = ('data',['../data/ponto.dat']) 
+appdata = ('data',['../data/ponto.dat',
+                   '../data/configuration1.dat',
+                   '../data/configuration2.dat',
+                   '../data/configuration3.dat',
+                   '../data/configuration4.dat',
+                   '../data/configuration5.dat',
+                   '../data/configuration6.dat' ]) 
  
 logfiles = ('log',['../log/log.log']) 
 
