@@ -15,10 +15,24 @@
                 </XRCED>
               </object>
             </object>
+            <object class="spacer">
+              <size>15,-1</size>
+            </object>
             <object class="sizeritem">
               <object class="wxBitmapButton" name="CReportButton">
                 <bitmap>..\res\report_32.png</bitmap>
                 <tooltip>Open report</tooltip>
+                <XRCED>
+                  <events>EVT_BUTTON</events>
+                  <assign_var>1</assign_var>
+                </XRCED>
+              </object>
+            </object>
+            <object class="sizeritem">
+              <object class="wxBitmapButton" name="COnedayReportButton">
+                <bitmap>..\res\one_report_32.png</bitmap>
+                <tooltip>Open one day report</tooltip>
+                <help>Open one day report</help>
                 <XRCED>
                   <events>EVT_BUTTON</events>
                   <assign_var>1</assign_var>
