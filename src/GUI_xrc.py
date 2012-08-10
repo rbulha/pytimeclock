@@ -38,12 +38,14 @@ class xrcCRelogioFrame(wx.Frame):
         # Define variables for the controls, bind event handlers
         self.AddMarkBtn = xrc.XRCCTRL(self, "AddMarkBtn")
         self.CReportButton = xrc.XRCCTRL(self, "CReportButton")
+        self.COnedayReportButton = xrc.XRCCTRL(self, "COnedayReportButton")
         self.ExitBtn = xrc.XRCCTRL(self, "ExitBtn")
         self.ClearAllMarks = xrc.XRCCTRL(self, "ClearAllMarks")
         self.AboutButton = xrc.XRCCTRL(self, "AboutButton")
 
         self.Bind(wx.EVT_BUTTON, self.OnButton_AddMarkBtn, self.AddMarkBtn)
         self.Bind(wx.EVT_BUTTON, self.OnButton_CReportButton, self.CReportButton)
+        self.Bind(wx.EVT_BUTTON, self.OnButton_COnedayReportButton, self.COnedayReportButton)
         self.Bind(wx.EVT_BUTTON, self.OnButton_ExitBtn, self.ExitBtn)
         self.Bind(wx.EVT_BUTTON, self.OnButton_ClearAllMarks, self.ClearAllMarks)
         self.Bind(wx.EVT_BUTTON, self.OnButton_AboutButton, self.AboutButton)
@@ -60,6 +62,12 @@ class xrcCRelogioFrame(wx.Frame):
         # Replace with event handler code
         print "OnButton_CReportButton()"
 #!XRCED:end-block:xrcCRelogioFrame.OnButton_CReportButton        
+
+#!XRCED:begin-block:xrcCRelogioFrame.OnButton_COnedayReportButton
+    def OnButton_COnedayReportButton(self, evt):
+        # Replace with event handler code
+        print "OnButton_COnedayReportButton()"
+#!XRCED:end-block:xrcCRelogioFrame.OnButton_COnedayReportButton        
 
 #!XRCED:begin-block:xrcCRelogioFrame.OnButton_ExitBtn
     def OnButton_ExitBtn(self, evt):

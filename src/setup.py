@@ -98,7 +98,8 @@ resourcefiles = ('res',
                     '../res/s_e_down.ico',
                     '../res/s_e_up.ico',
                     '../res/day_off.ico',
-                    '../res/Delete.ico'
+                    '../res/Delete.ico',
+                    '../res/one_report_32.png'
                   ]
                 )
  

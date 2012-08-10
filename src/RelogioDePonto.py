@@ -2,8 +2,10 @@
 import wx
 import sys
 import os
+import time
 import __builtin__
 
+from datetime           import datetime
 from GUI_xrc            import xrcCRelogioFrame
 from DialogMark         import CDialogMark
 from PontoDB            import CPontoDB
@@ -12,6 +14,7 @@ from Milestones         import CMilestonePanel
 from Report             import CReport
 from Labeling           import CLabeling as LABELING
 from wx.lib.wordwrap    import wordwrap
+from OneDayReport       import COneDayReport
 
 __builtin__.__dict__['HOMEPATH'] = os.path.abspath(os.path.dirname(sys.argv[0]))
 #sys.stderr = open(os.path.join(os.path.dirname(HOMEPATH),'log\\stderr.log'), 'w')
@@ -208,6 +211,14 @@ class CCRelogioFrame(xrcCRelogioFrame):
         info.Developers = [ LABELING.DEVELOPER_MAIN,
                             LABELING.DEVELOPER_MAIN_CONT ]
         wx.AboutBox(info)
+    def OnButton_COnedayReportButton(self, evt):
+        target_day = time.localtime()
+        print "OnButton_COnedayReportButton: ",target_day
+        #target_day = time.strptime(self.GetItemText(self.currentItem),"%d/%m/%Y")
+        self.cReportFrame = COneDayReport(None,self.cPontoDB,datetime(target_day.tm_year,target_day.tm_mon,target_day.tm_mday,target_day.tm_hour,target_day.tm_min,target_day.tm_sec))
+        self.cReportFrame.Show(True)
+    
+        
 class CRelogioApp(wx.App):
     def __init__(self):
         wx.App.__init__(self, redirect=False)   
